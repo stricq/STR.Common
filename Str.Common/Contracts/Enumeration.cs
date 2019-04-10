@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 
 
-namespace STR.Common.Contracts {
+namespace Str.Common.Contracts {
 
   public class Enumeration<T> : IComparable where T : struct {
 

@@ -7,21 +7,21 @@ namespace Str.Common.Contracts {
 
   public interface IAsyncService {
 
-    Task Run(Action action);
+    Task Run(Action Action);
 
-    Task<T> Run<T>(Func<T> function);
+    Task<T> Run<T>(Func<T> Function);
 
-    Task Run(Action action, CancellationToken token);
+    Task Run(Action Action, CancellationToken Token);
 
-    Task<T> Run<T>(Func<T> function, CancellationToken token);
+    Task<T> Run<T>(Func<T> Function, CancellationToken Token);
 
-    Task RunAsync(Action action);
+    Task RunAsync(Action Action);
 
-    Task RunAsync(Action action, CancellationToken token);
+    Task RunAsync(Action Action, CancellationToken Token);
 
-    Task RunUiContext(Action action);
+    Task RunUiContext(Action Action);
 
-    Task RunUiContext(Action action, CancellationToken token);
+    Task RunUiContext(Action Action, CancellationToken Token);
 
   }
 

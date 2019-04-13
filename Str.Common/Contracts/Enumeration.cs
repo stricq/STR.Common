@@ -5,7 +5,11 @@ using System.Reflection;
 
 
 namespace Str.Common.Contracts {
-
+  //
+  // This code is based on an article posted by Jimmy Bogard on the Los Techies website:
+  //
+  // https://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/
+  //
   public class Enumeration<T> : IComparable where T : struct {
 
     #region Constructors
@@ -78,13 +82,13 @@ namespace Str.Common.Contracts {
     }
 
     public static TOut FromValue<TOut>(T value) where TOut : Enumeration<T> {
-      TOut matchingItem = parse<TOut, T>(value, "Value", item => item.Value.Equals(value));
+      TOut matchingItem = Parse<TOut, T>(value, "Value", item => item.Value.Equals(value));
 
       return matchingItem;
     }
 
     public static TOut FromDisplayName<TOut>(string displayName) where TOut : Enumeration<T> {
-      TOut matchingItem = parse<TOut, string>(displayName, "DisplayName", item => item.DisplayName == displayName);
+      TOut matchingItem = Parse<TOut, string>(displayName, "DisplayName", item => item.DisplayName == displayName);
 
       return matchingItem;
     }
@@ -93,7 +97,7 @@ namespace Str.Common.Contracts {
 
     #region Private Methods
 
-    private static TOut parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration<T> {
+    private static TOut Parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration<T> {
       TOut matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
 
       if (matchingItem != null) return matchingItem;
@@ -187,13 +191,13 @@ namespace Str.Common.Contracts {
     }
 
     public static TOut FromValue<TOut>(int value) where TOut : Enumeration {
-      TOut matchingItem = parse<TOut, int>(value, "Value", item => item.Value.Equals(value));
+      TOut matchingItem = Parse<TOut, int>(value, "Value", item => item.Value.Equals(value));
 
       return matchingItem;
     }
 
     public static TOut FromDisplayName<TOut>(string displayName) where TOut : Enumeration {
-      TOut matchingItem = parse<TOut, string>(displayName, "DisplayName", item => item.DisplayName == displayName);
+      TOut matchingItem = Parse<TOut, string>(displayName, "DisplayName", item => item.DisplayName == displayName);
 
       return matchingItem;
     }
@@ -202,7 +206,7 @@ namespace Str.Common.Contracts {
 
     #region Private Methods
 
-    private static TOut parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration {
+    private static TOut Parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration {
       TOut matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
 
       if (matchingItem != null) return matchingItem;

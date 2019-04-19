@@ -17,9 +17,15 @@ namespace Str.Common.Extensions {
 
     private const int DefaultBufferSize = 32768;
 
-    public static async Task CopyToAsync<T>(this Stream input, Stream output, long size, int bufferSize = DefaultBufferSize, T state = default, Action<FileDownloadProgressMessage<T>> callback = null) {
+    public static async Task CopyToAsync<T>(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage<T> message = null, Action<FileDownloadProgressMessage<T>> callback = null) {
+      await input.CopyToAsync(output, bufferSize, message as FileDownloadProgressMessage, callback as Action<FileDownloadProgressMessage>);
+    }
+
+    public static async Task CopyToAsync(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage message = null, Action<FileDownloadProgressMessage> callback = null) {
       if (!input.CanRead)   throw new InvalidOperationException("Input stream must be open for reading.");
       if (!output.CanWrite) throw new InvalidOperationException("Output stream must be open for writing.");
+
+      if (bufferSize < 1) throw new ArgumentException("Argument may not be 0 or negative.", nameof(bufferSize));
 
       byte[][] buf = { new byte[bufferSize], new byte[bufferSize] };
 
@@ -44,7 +50,9 @@ namespace Str.Common.Extensions {
 
         total += bufl[bufno];
 
-        callback?.Invoke(new FileDownloadProgressMessage<T> { BytesCurrent = total, BytesTotal = size, State = state });
+        if (message != null) message.BytesCurrent = total;
+
+        callback?.Invoke(message);
         //
         // wait for the in-flight write operation, if one exists, to complete
         // the only time one won't exist is after the very first read operation completes
@@ -71,7 +79,9 @@ namespace Str.Common.Extensions {
       //
       if (write != null) await write;
 
-      callback?.Invoke(new FileDownloadProgressMessage<T> { IsComplete = true, State = state });
+      if (message != null) message.IsComplete = true;
+
+      callback?.Invoke(message);
     }
 
   }

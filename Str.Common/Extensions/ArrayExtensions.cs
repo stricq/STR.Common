@@ -7,12 +7,12 @@ namespace Str.Common.Extensions {
 
   public static class ArrayExtensions {
 
-    public static void ForEach(this Array Array, Action<Array, int[]> Action) {
-      if (Array.LongLength == 0) return;
+    public static void ForEach(this Array array, Action<Array, int[]> action) {
+      if (array.LongLength == 0) return;
 
-      ArrayTraverse walker = new ArrayTraverse(Array);
+      ArrayTraverse walker = new ArrayTraverse(array);
 
-      do Action(Array, walker.Position);
+      do action(array, walker.Position);
       while(walker.Step());
     }
 

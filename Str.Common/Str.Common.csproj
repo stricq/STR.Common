@@ -4,12 +4,12 @@
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>2.0.0-dev</Version>
-    <Authors>Douglas McLaughlin</Authors>
+    <Authors>stricq</Authors>
     <Company>STR Programming Services</Company>
     <Description>Common code for other STR applications.</Description>
     <Copyright>Copyright 2019 STR Programming Services</Copyright>
     <PackageProjectUrl>https://github.com/stricq/STR.Common</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/stricq/STR.Common</RepositoryUrl>
+    <RepositoryUrl></RepositoryUrl>
     <PackageTags>str</PackageTags>
     <PackageId>STR.Common</PackageId>
     <AssemblyName>STR.Common</AssemblyName>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0-dev</Version>
+    <Version>2.0.0-dev.3</Version>
     <Authors>stricq</Authors>
     <Company>STR Programming Services</Company>
     <Description>Common code for other STR applications.</Description>
@@ -13,6 +13,9 @@
     <PackageTags>str</PackageTags>
     <PackageId>STR.Common</PackageId>
     <AssemblyName>STR.Common</AssemblyName>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,11 +5,9 @@ namespace Str.Common.Extensions {
 
   public static class DoubleExtensions {
     //
-    // This method comes from an answer on Stack Overflow
+    // https://docs.microsoft.com/en-us/dotnet/api/system.double.equals?redirectedfrom=MSDN&view=netframework-4.8#System_Double_Equals_System_Double_
     //
-    // https://stackoverflow.com/a/37403737/1135296
-    //
-    public static bool EqualInPercentRange(this double Value1, double Value2, long Units = 2) {
+    public static bool HasMinimalDifference(this double Value1, double Value2, long Units = 2) {
       long longValue1 = BitConverter.DoubleToInt64Bits(Value1);
       long longValue2 = BitConverter.DoubleToInt64Bits(Value2);
       //

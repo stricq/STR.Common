@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0-dev.3</Version>
+    <Version>2.0.0-dev.4</Version>
     <Authors>stricq</Authors>
     <Company>STR Programming Services</Company>
     <Description>Common code for other STR applications.</Description>
@@ -14,12 +14,12 @@
     <PackageId>STR.Common</PackageId>
     <AssemblyName>STR.Common</AssemblyName>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated to .Net Core 3.0 preview 4.</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0-preview4.19212.13" />
   </ItemGroup>
 
 </Project>

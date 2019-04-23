@@ -5,7 +5,7 @@ namespace Str.Common.Extensions {
 
   public static class DoubleExtensions {
     //
-    // https://docs.microsoft.com/en-us/dotnet/api/system.double.equals?redirectedfrom=MSDN&view=netframework-4.8#System_Double_Equals_System_Double_
+    // https://docs.microsoft.com/en-us/dotnet/api/system.double.equals
     //
     public static bool HasMinimalDifference(this double Value1, double Value2, long Units = 2) {
       long longValue1 = BitConverter.DoubleToInt64Bits(Value1);

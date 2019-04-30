@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
@@ -10,6 +11,9 @@ namespace Str.Common.Contracts {
   //
   // https://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/
   //
+  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global")]
   public class Enumeration<T> : IComparable where T : struct {
 
     #region Constructors
@@ -119,6 +123,8 @@ namespace Str.Common.Contracts {
 
   }
 
+  [SuppressMessage("ReSharper", "UnusedMember.Global")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   public class Enumeration : IComparable {
 
     #region Constructors

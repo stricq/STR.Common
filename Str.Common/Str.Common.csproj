@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0-dev.4</Version>
+    <Version>2.0.0-dev4.19120.2</Version>
     <Authors>stricq</Authors>
     <Company>STR Programming Services</Company>
     <Description>Common code for other STR applications.</Description>
@@ -14,8 +14,10 @@
     <PackageId>STR.Common</PackageId>
     <AssemblyName>STR.Common</AssemblyName>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>Updated to .Net Core 3.0 preview 4.</PackageReleaseNotes>
+    <PackageReleaseNotes>Removed AsyncService class.</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

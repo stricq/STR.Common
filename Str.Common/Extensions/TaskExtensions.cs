@@ -1,9 +1,11 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 
 namespace Str.Common.Extensions {
 
+  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
   public static class TaskExtensions {
 
     #region FireAndForget

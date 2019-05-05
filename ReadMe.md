@@ -24,3 +24,4 @@ Common code for STR Applications
 #### Task
 * Fire
 * FireAndForget
+* RunOnUiThread

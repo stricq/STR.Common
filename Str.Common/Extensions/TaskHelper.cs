@@ -10,12 +10,18 @@ namespace Str.Common.Extensions {
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
   public static class TaskHelper {
 
+    private static readonly TaskScheduler uiScheduler;
+
+    static TaskHelper() {
+      uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+    }
+
     public static Task RunOnUiThread(Action action) {
       return RunOnUiThread(action, CancellationToken.None);
     }
 
     public static Task RunOnUiThread(Action action, CancellationToken token) {
-      return Task.Factory.StartNew(action, token, TaskCreationOptions.DenyChildAttach, TaskScheduler.FromCurrentSynchronizationContext());
+      return Task.Factory.StartNew(action, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
     public static Task RunOnUiThread(Func<Task> func) {
@@ -23,7 +29,7 @@ namespace Str.Common.Extensions {
     }
 
     public static Task RunOnUiThread(Func<Task> func, CancellationToken token) {
-      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, TaskScheduler.FromCurrentSynchronizationContext());
+      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
     public static Task<TResult> RunOnUiThread<TResult>(Func<TResult> func) {
@@ -31,7 +37,7 @@ namespace Str.Common.Extensions {
     }
 
     public static Task<TResult> RunOnUiThread<TResult>(Func<TResult> func, CancellationToken token) {
-      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, TaskScheduler.FromCurrentSynchronizationContext());
+      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
     public static Task<TResult> RunOnUiThread<TResult>(Func<Task<TResult>> func) {
@@ -39,7 +45,7 @@ namespace Str.Common.Extensions {
     }
 
     public static Task<TResult> RunOnUiThread<TResult>(Func<Task<TResult>> func, CancellationToken token) {
-      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, TaskScheduler.FromCurrentSynchronizationContext()).Result;
+      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler).Result;
     }
 
   }

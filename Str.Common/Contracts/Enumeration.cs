@@ -11,9 +11,9 @@ namespace Str.Common.Contracts {
   //
   // https://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/
   //
-  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-  [SuppressMessage("ReSharper", "UnusedMember.Global")]
+  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
   public class Enumeration<T> : IComparable where T : struct {
 
     #region Constructors
@@ -123,8 +123,8 @@ namespace Str.Common.Contracts {
 
   }
 
-  [SuppressMessage("ReSharper", "UnusedMember.Global")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
   public class Enumeration : IComparable {
 
     #region Constructors

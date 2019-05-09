@@ -21,7 +21,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0-preview4.19212.13" />
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.0.6-beta">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0-preview5.19224.8" />
   </ItemGroup>
 
 </Project>

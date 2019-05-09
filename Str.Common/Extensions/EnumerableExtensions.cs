@@ -9,6 +9,7 @@ using Str.Common.Contracts;
 
 namespace Str.Common.Extensions {
 
+  [SuppressMessage("ReSharper", "UnusedMember.Global")]
   public static class EnumerableExtensions {
 
     #region ForEach

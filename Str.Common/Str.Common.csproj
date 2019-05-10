@@ -14,7 +14,7 @@
     <PackageId>STR.Common</PackageId>
     <AssemblyName>STR.Common</AssemblyName>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>Maybe fixed TaskHelper.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated to Preview 5.</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>

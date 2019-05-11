@@ -45,7 +45,7 @@ namespace Str.Common.Extensions {
     }
 
     public static Task<TResult> RunOnUiThread<TResult>(Func<Task<TResult>> func, CancellationToken token) {
-      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler).Result;
+      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler).Unwrap();
     }
 
   }

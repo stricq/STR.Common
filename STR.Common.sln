@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Str.Common", "Str.Common\St
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A51EE79F-F52E-4DDD-9FBB-F0A5BE4EC2DE}"
 	ProjectSection(SolutionItems) = preProject
+		Jenkinsfile = Jenkinsfile
 		ReadMe.md = ReadMe.md
 		STR.Common.sln.DotSettings = STR.Common.sln.DotSettings
 	EndProjectSection

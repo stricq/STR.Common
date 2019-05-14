@@ -37,7 +37,7 @@ pipeline {
         NUGET_API_KEY = credentials('nuget-api-key')
       }
       steps {
-        bat 'dotnet nuget push **\\nupkgs\\*.nupkg -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json --no-symbols true'
+        bat 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json --no-symbols true'
       }
     }
   }

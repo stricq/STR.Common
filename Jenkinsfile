@@ -22,17 +22,20 @@ pipeline {
       }
     }
     stage('Backup') {
+      when { branch 'master' }
       steps {
         bat '''move /Y nupkgs\\*.nupkg "t:\\Nuget Packages"
         exit 0'''
       }
     }
     stage('Pack') {
+      when { branch 'master' }
       steps {
         bat 'dotnet pack --no-build --output nupkgs'
       }
     }
     stage('Publish') {
+      when { branch 'master' }
       environment {
         NUGET_API_KEY = credentials('nuget-api-key')
       }

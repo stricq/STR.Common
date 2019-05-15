@@ -30,7 +30,7 @@ pipeline {
       }
     }
     stage('Publish') {
-      when { branch 'master' }
+      when { branch 'foo' }
       environment {
         NUGET_API_KEY = credentials('nuget-api-key')
       }

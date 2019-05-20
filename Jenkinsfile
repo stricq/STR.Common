@@ -25,10 +25,16 @@ pipeline {
         exit 0'''
       }
     }
-    stage('Pack') {
-      when { anyOf { branch 'master'; branch 'release' } }
+    stage('Pack Debug') {
+      when { branch 'master' }
       steps {
-        bat 'dotnet pack --no-build --output nupkgs'
+        bat 'dotnet pack --no-build --no-restore --configuration Debug --output nupkgs'
+      }
+    }
+    stage('Pack Release') {
+      when { branch 'release' }
+      steps {
+        bat 'dotnet pack --no-build --no-restore --configuration Release --output nupkgs'
       }
     }
     stage('Publish') {

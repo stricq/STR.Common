@@ -6,31 +6,33 @@ pipeline {
         bat 'dotnet clean'
       }
     }
-    stage('Restore Packages') {
-      steps {
-        bat 'dotnet restore --verbosity n'
-      }
-    }
-    stage('Build') {
+    stage('Build Debug') {
+      when { not { branch 'release' } }
       steps {
         bat 'dotnet build --configuration Debug'
       }
     }
+    stage('Build Release') {
+      when { branch 'release' }
+      steps {
+        bat 'dotnet build --configuration Release'
+      }
+    }
     stage('Backup') {
-      when { branch 'master' }
+      when { anyOf { branch 'master'; branch 'release' } }
       steps {
         bat '''move /Y nupkgs\\*.nupkg "t:\\Nuget Packages"
         exit 0'''
       }
     }
     stage('Pack') {
-      when { branch 'master' }
+      when { anyOf { branch 'master'; branch 'release' } }
       steps {
         bat 'dotnet pack --no-build --output nupkgs'
       }
     }
     stage('Publish') {
-      when { branch 'foo' }
+      when { anyOf { branch 'master'; branch 'release' } }
       environment {
         NUGET_API_KEY = credentials('nuget-api-key')
       }

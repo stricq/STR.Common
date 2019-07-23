@@ -12,7 +12,7 @@
     <RepositoryUrl></RepositoryUrl>
     <PackageTags>str</PackageTags>
     <PackageId>STR.Common</PackageId>
-    <AssemblyName>STR.Common</AssemblyName>
+    <AssemblyName>Str.Common</AssemblyName>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReleaseNotes>Updated for preview 6.</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>

@@ -10,8 +10,12 @@ namespace Str.Common.Extensions {
 
     #region FireAndForget
 
-    public static void FireAndForget(this Task Task) {
-      Task.ConfigureAwait(false); // Do not mashal back to calling thread.
+    public static void FireAndForget(this Task task) {
+      task.ConfigureAwait(false); // Do not mashal back to calling thread.
+    }
+
+    public static void FireAndForget(this ValueTask task) {
+      task.ConfigureAwait(false);
     }
 
     #endregion FireAndForget
@@ -22,7 +26,15 @@ namespace Str.Common.Extensions {
       return task.ConfigureAwait(false);
     }
 
+    public static ConfiguredValueTaskAwaitable Fire(this ValueTask task) {
+      return task.ConfigureAwait(false);
+    }
+
     public static ConfiguredTaskAwaitable<T> Fire<T>(this Task<T> task) {
+      return task.ConfigureAwait(false);
+    }
+
+    public static ConfiguredValueTaskAwaitable<T> Fire<T>(this ValueTask<T> task) {
       return task.ConfigureAwait(false);
     }
 

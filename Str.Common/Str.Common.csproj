@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>2.0.0-dev6.19163.2</Version>
+    <Version>2.0.0-dev7.19204.1</Version>
     <Authors>stricq</Authors>
     <Company>STR Programming Services</Company>
     <Description>Common code for other STR applications.</Description>
@@ -12,16 +12,16 @@
     <RepositoryUrl></RepositoryUrl>
     <PackageTags>str</PackageTags>
     <PackageId>STR.Common</PackageId>
-    <AssemblyName>STR.Common</AssemblyName>
+    <AssemblyName>Str.Common</AssemblyName>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>Updated for preview 6.</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated for preview 7.  Aded Fire() and FireAndForget() for ValueTask and ValueTask&lt;T&gt;.</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0-preview7.19362.9" />
   </ItemGroup>
 
 </Project>

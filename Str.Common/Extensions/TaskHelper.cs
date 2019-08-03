@@ -10,11 +10,21 @@ namespace Str.Common.Extensions {
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
   public static class TaskHelper {
 
+    #region Private Fields
+
     private static readonly TaskScheduler uiScheduler;
+
+    #endregion Private Fields
+
+    #region Constructor
 
     static TaskHelper() {
       uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
     }
+
+    #endregion Constructor
+
+    #region Static Public Methods
 
     public static Task RunOnUiThread(Action action) {
       return RunOnUiThread(action, CancellationToken.None);
@@ -47,6 +57,8 @@ namespace Str.Common.Extensions {
     public static Task<TResult> RunOnUiThread<TResult>(Func<Task<TResult>> func, CancellationToken token) {
       return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler).Unwrap();
     }
+
+    #endregion Static Public Methods
 
   }
 

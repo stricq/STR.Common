@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>2.0.0-dev8.19226.1</Version>
+    <Version>2.0.0</Version>
     <Authors>stricq</Authors>
     <Company>STR Programming Services</Company>
     <Description>Common code for other STR applications.</Description>
@@ -14,15 +14,14 @@
     <PackageId>STR.Common</PackageId>
     <AssemblyName>Str.Common</AssemblyName>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>Added T context to FireAndForget.
-Updated to preview 8.</PackageReleaseNotes>
+    <PackageReleaseNotes>Update to .Net Core 3.0</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0-preview8.19405.3" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0" />
   </ItemGroup>
 
 </Project>

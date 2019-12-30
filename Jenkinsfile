@@ -3,7 +3,11 @@ pipeline {
   stages {
     stage('Build Debug') {
       when { not { branch 'release' } }
+      script {
+        JDATE = new Date().format("YYDDD")
+      }
       steps {
+        bat 'echo %JDATE%'
         bat 'dotnet clean --configuration Debug'
         bat 'dotnet build --configuration Debug'
       }

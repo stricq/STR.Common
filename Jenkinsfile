@@ -4,7 +4,7 @@ pipeline {
     MASTER_VER  = '2.1.1'
     RELEASE_VER = '2.1.0'
 
-    GIT_COMMIT_SHORT = "%GIT_COMMIT:~0:7%"
+    GIT_COMMIT_SHORT = '%GIT_COMMIT:~0:7%'
   }
   stages {
     stage('Build Debug') {

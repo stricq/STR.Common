@@ -6,7 +6,7 @@ pipeline {
   }
   stages {
     stage('Build Debug') {
-      when { not anyOf { branch 'master'; branch 'release' } }
+      when { not { anyOf { branch 'master'; branch 'release' } } }
       steps {
         bat 'dotnet clean --configuration Debug'
         bat 'dotnet build --configuration Debug'

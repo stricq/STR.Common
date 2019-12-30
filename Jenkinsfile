@@ -1,20 +1,17 @@
 pipeline {
   agent any
   stages {
-    stage('Clean') {
-      steps {
-        bat 'dotnet clean'
-      }
-    }
     stage('Build Debug') {
       when { not { branch 'release' } }
       steps {
+        bat 'dotnet clean --configuration Debug'
         bat 'dotnet build --configuration Debug'
       }
     }
     stage('Build Release') {
       when { branch 'release' }
       steps {
+        bat 'dotnet clean --configuration Release'
         bat 'dotnet build --configuration Release'
       }
     }
@@ -23,12 +20,6 @@ pipeline {
       steps {
         bat '''move /Y nupkgs\\*.nupkg "t:\\Nuget Packages"
         exit 0'''
-      }
-    }
-    stage('Pack Debug') {
-      when { branch 'master' }
-      steps {
-        bat 'dotnet pack --no-build --no-restore --configuration Debug --output nupkgs'
       }
     }
     stage('Pack Release') {

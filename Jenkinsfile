@@ -10,7 +10,6 @@ pipeline {
     stage('Build Debug') {
       when { not { anyOf { branch 'master'; branch 'release' } } }
       steps {
-        bat 'echo %GIT_HASH%'
         bat 'dotnet clean --configuration Debug'
         bat 'dotnet build --configuration Debug'
       }
@@ -35,13 +34,13 @@ pipeline {
         script {
           env.JDATE = new Date().format("yyDDD.HHmm")
         }
-        bat 'dotnet pack --no-build --no-restore --configuration Release -p:PackageVersion="%MASTER_VER%-beta.%JDATE%+%GIT_COMMIT%" -p:Version="%MASTER_VER%-beta.%JDATE%+%GIT_COMMIT%" --output nupkgs'
+        bat 'dotnet pack --no-build --no-restore --configuration Release -p:PackageVersion="%MASTER_VER%-beta.%JDATE%+%GIT_HASH%" -p:Version="%MASTER_VER%-beta.%JDATE%+%GIT_HASH%" --output nupkgs'
       }
     }
     stage('Pack Release') {
       when { branch 'release' }
       steps {
-        bat 'dotnet pack --no-build --no-restore --configuration Release -p:PackageVersion="%RELEASE_VER%+%GIT_COMMIT%" -p:Version="%RELEASE_VER%+%GIT_COMMIT%" --output nupkgs'
+        bat 'dotnet pack --no-build --no-restore --configuration Release -p:PackageVersion="%RELEASE_VER%+%GIT_HASH%" -p:Version="%RELEASE_VER%+%GIT_HASH%" --output nupkgs'
       }
     }
     stage('Publish') {

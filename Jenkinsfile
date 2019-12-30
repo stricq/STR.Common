@@ -10,7 +10,7 @@ pipeline {
     stage('Build Debug') {
       when { not { anyOf { branch 'master'; branch 'release' } } }
       steps {
-        echo %GIT_COMMIT_SHORT%
+        bat 'echo %GIT_COMMIT_SHORT%'
         bat 'dotnet clean --configuration Debug'
         bat 'dotnet build --configuration Debug'
       }

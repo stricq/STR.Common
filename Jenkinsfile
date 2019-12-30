@@ -5,7 +5,7 @@ pipeline {
       when { not { branch 'release' } }
       steps {
         script {
-          env.JDATE = new Date().format("YYDDD")
+          env.JDATE = new Date().format("yyDDD")
         }
         bat 'echo %JDATE%'
         bat 'dotnet clean --configuration Debug'

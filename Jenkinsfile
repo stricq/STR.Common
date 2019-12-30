@@ -3,12 +3,13 @@ pipeline {
   environment {
     MASTER_VER  = '2.1.1'
     RELEASE_VER = '2.1.0'
+
+    GIT_HASH = GIT_COMMIT.take(7)
   }
   stages {
     stage('Build Debug') {
       when { not { anyOf { branch 'master'; branch 'release' } } }
       steps {
-        bat 'for /f %%i in ('git rev-parse HEAD') do set GIT_HASH=%%i'
         bat 'echo %GIT_HASH%'
         bat 'dotnet clean --configuration Debug'
         bat 'dotnet build --configuration Debug'

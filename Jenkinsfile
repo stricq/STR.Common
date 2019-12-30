@@ -8,10 +8,8 @@ pipeline {
     stage('Build Debug') {
       when { not { anyOf { branch 'master'; branch 'release' } } }
       steps {
-        script {
-          env.GIT_COMMIT_SHORT = '%GIT_COMMIT:~0:7%'
-        }
-        bat 'echo %GIT_COMMIT_SHORT%'
+        bat 'for /f %%i in ('git rev-parse HEAD') do set GIT_HASH=%%i'
+        bat 'echo %GIT_HASH%'
         bat 'dotnet clean --configuration Debug'
         bat 'dotnet build --configuration Debug'
       }

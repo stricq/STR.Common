@@ -19,7 +19,7 @@ pipeline {
       }
     }
     stage('Backup') {
-      when { anyOf { branch 'master'; branch 'release' } }
+      when { branch 'release' }
       steps {
         bat '''move /Y nupkgs\\*.nupkg "t:\\Nuget Packages"
         exit 0'''
@@ -38,7 +38,7 @@ pipeline {
       }
     }
     stage('Publish') {
-      when { anyOf { /* branch 'master'; */ branch 'release' } }
+      when { branch 'release' }
       environment {
         NUGET_API_KEY = credentials('nuget-api-key')
       }

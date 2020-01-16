@@ -26,35 +26,35 @@ namespace Str.Common.Extensions {
 
     #region Static Public Methods
 
-    public static Task RunOnUiThread(Action action) {
-      return RunOnUiThread(action, CancellationToken.None);
+    public static Task RunOnUiThreadAsync(Action action) {
+      return RunOnUiThreadAsync(action, CancellationToken.None);
     }
 
-    public static Task RunOnUiThread(Action action, CancellationToken token) {
+    public static Task RunOnUiThreadAsync(Action action, CancellationToken token) {
       return Task.Factory.StartNew(action, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
-    public static Task RunOnUiThread(Func<Task> func) {
-      return RunOnUiThread(func, CancellationToken.None);
+    public static Task RunOnUiThreadAsync(Func<Task> func) {
+      return RunOnUiThreadAsync(func, CancellationToken.None);
     }
 
-    public static Task RunOnUiThread(Func<Task> func, CancellationToken token) {
+    public static Task RunOnUiThreadAsync(Func<Task> func, CancellationToken token) {
       return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
-    public static Task<TResult> RunOnUiThread<TResult>(Func<TResult> func) {
-      return RunOnUiThread(func, CancellationToken.None);
+    public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<TResult> func) {
+      return RunOnUiThreadAsync(func, CancellationToken.None);
     }
 
-    public static Task<TResult> RunOnUiThread<TResult>(Func<TResult> func, CancellationToken token) {
+    public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<TResult> func, CancellationToken token) {
       return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
-    public static Task<TResult> RunOnUiThread<TResult>(Func<Task<TResult>> func) {
-      return RunOnUiThread(func, CancellationToken.None);
+    public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<Task<TResult>> func) {
+      return RunOnUiThreadAsync(func, CancellationToken.None);
     }
 
-    public static Task<TResult> RunOnUiThread<TResult>(Func<Task<TResult>> func, CancellationToken token) {
+    public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<Task<TResult>> func, CancellationToken token) {
       return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler).Unwrap();
     }
 

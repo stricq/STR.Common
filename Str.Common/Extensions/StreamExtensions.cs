@@ -12,13 +12,15 @@ namespace Str.Common.Extensions {
   //
   // https://stackoverflow.com/questions/1540658/net-asynchronous-stream-read-write/4139427#4139427
   //
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
   public static class StreamExtensions {
 
     private const int DefaultBufferSize = 32768;
 
-    public static async Task CopyToAsync<T>(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage<T> message = null, Action<FileDownloadProgressMessage<T>> callback = null) {
-      await input.CopyToAsync(output, bufferSize, message as FileDownloadProgressMessage, callback as Action<FileDownloadProgressMessage>);
+    public static Task CopyToAsync<T>(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage<T> message = null, Action<FileDownloadProgressMessage<T>> callback = null) {
+      return input.CopyToAsync(output, bufferSize, message as FileDownloadProgressMessage, callback as Action<FileDownloadProgressMessage>);
     }
 
     public static async Task CopyToAsync(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage message = null, Action<FileDownloadProgressMessage> callback = null) {
@@ -42,7 +44,7 @@ namespace Str.Common.Extensions {
         //
         // wait for the read operation to complete
         //
-        bufl[bufno] = await read;
+        bufl[bufno] = await read.Fire();
         //
         // if zero bytes read, the copy is complete
         //
@@ -57,7 +59,7 @@ namespace Str.Common.Extensions {
         // wait for the in-flight write operation, if one exists, to complete
         // the only time one won't exist is after the very first read operation completes
         //
-        if (write != null) await write;
+        if (write != null) await write.Fire();
         //
         // start the new write operation
         //
@@ -77,7 +79,7 @@ namespace Str.Common.Extensions {
       // wait for the final in-flight write operation, if one exists, to complete
       // the only time one won't exist is if the input stream is empty.
       //
-      if (write != null) await write;
+      if (write != null) await write.Fire();
 
       if (message != null) message.IsComplete = true;
 

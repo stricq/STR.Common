@@ -20,8 +20,4 @@
     <FileVersion>2.1.0.0</FileVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
-  </ItemGroup>
-
 </Project>

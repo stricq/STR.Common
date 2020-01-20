@@ -47,6 +47,7 @@ pipeline {
       }
     }
     stage('Publish') {
+      when { not { branch 'PR*' } }
       environment {
         NUGET_API_KEY = credentials('nuget-api-key')
       }

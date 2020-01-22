@@ -13,7 +13,7 @@ namespace Str.Common.Extensions {
 
     public static void FireAndForget(this Task task, Action<Exception> onException = null) {
       try {
-        task.ConfigureAwait(false);
+        Task.Run(() => task).ConfigureAwait(false);
       }
       catch(Exception ex) when(onException != null) {
         onException(ex);
@@ -22,7 +22,7 @@ namespace Str.Common.Extensions {
 
     public static void FireAndForget<T>(this Task task, T context, Action<T, Exception> onException) {
       try {
-        task.ConfigureAwait(false);
+        Task.Run(() => task).ConfigureAwait(false);
       }
       catch(Exception ex) {
         onException(context, ex);
@@ -31,7 +31,7 @@ namespace Str.Common.Extensions {
 
     public static void FireAndForget(this ValueTask task, Action<Exception> onException = null) {
       try {
-        task.ConfigureAwait(false);
+        Task.Run(() => task).ConfigureAwait(false);
       }
       catch(Exception ex) when(onException != null) {
         onException(ex);
@@ -40,7 +40,7 @@ namespace Str.Common.Extensions {
 
     public static void FireAndForget<T>(this ValueTask task, T context, Action<T, Exception> onException) {
       try {
-        task.ConfigureAwait(false);
+        Task.Run(() => task).ConfigureAwait(false);
       }
       catch(Exception ex) {
         onException(context, ex);

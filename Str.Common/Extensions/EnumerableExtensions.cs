@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Str.Common.Contracts;
+using Str.Common.Core;
 
 
 namespace Str.Common.Extensions {
@@ -71,6 +72,14 @@ namespace Str.Common.Extensions {
     }
 
     #endregion Traverse
+
+    #region ToLockingList
+
+    public static LockingList<T> ToLockingList<T>(this IEnumerable<T> enumerable) {
+      return new LockingList<T>(enumerable);
+    }
+
+    #endregion ToLockingList
 
   }
 

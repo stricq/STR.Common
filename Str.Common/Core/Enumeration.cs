@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 
 
-namespace Str.Common.Contracts {
+namespace Str.Common.Core {
   //
   // This code is based on an article posted by Jimmy Bogard on the Los Techies website:
   //
@@ -125,6 +125,7 @@ namespace Str.Common.Contracts {
 
   [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
   public class Enumeration : IComparable {
 
     #region Constructors

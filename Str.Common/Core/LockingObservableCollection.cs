@@ -12,6 +12,7 @@ namespace Str.Common.Core {
   [SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global", Justification = "This is a library.")]
   public class LockingObservableCollection<T> : LockingCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged {
 
     #region Private Fields

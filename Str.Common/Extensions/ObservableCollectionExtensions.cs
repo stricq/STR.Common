@@ -43,7 +43,7 @@ namespace Str.Common.Extensions {
         return;
       }
 
-      for(int i = 0; i < list.Count(); ++i) {
+      for(int i = 0; i < list.Count; ++i) {
         if (itemList.Count == 0) break;
 
         if (itemList[0].CompareTo(list[i]) >= 0) continue;
@@ -71,7 +71,7 @@ namespace Str.Common.Extensions {
         return;
       }
 
-      for(int i = 0; i < list.Count(); ++i) {
+      for(int i = 0; i < list.Count; ++i) {
         if(itemList.Count == 0) break;
 
         if (comparer(itemList[0], list[i]) >= 0) continue;
@@ -99,7 +99,7 @@ namespace Str.Common.Extensions {
         return;
       }
 
-      for(int i = 0; i < list.Count(); ++i) {
+      for(int i = 0; i < list.Count; ++i) {
         if (itemList.Count == 0) break;
 
         if (itemList[0].CompareTo(list[i]) >= 0) continue;
@@ -127,7 +127,7 @@ namespace Str.Common.Extensions {
         return;
       }
 
-      for(int i = 0; i < list.Count(); ++i) {
+      for(int i = 0; i < list.Count; ++i) {
         if (itemList.Count == 0) break;
 
         if (comparer(itemList[0], list[i]) >= 0) continue;

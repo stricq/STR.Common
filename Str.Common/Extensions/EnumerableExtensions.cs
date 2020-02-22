@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Str.Common.Contracts;
+using Str.Common.Core;
 
 
 namespace Str.Common.Extensions {
 
-  [SuppressMessage("ReSharper", "UnusedMember.Global")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
   public static class EnumerableExtensions {
 
     #region ForEach
@@ -71,6 +73,22 @@ namespace Str.Common.Extensions {
     }
 
     #endregion Traverse
+
+    #region ToLocking...
+
+    public static LockingList<T> ToLockingList<T>(this IEnumerable<T> enumerable) {
+      return new LockingList<T>(enumerable);
+    }
+
+    public static LockingCollection<T> ToLockingCollection<T>(this IEnumerable<T> enumerable) {
+      return new LockingCollection<T>(enumerable);
+    }
+
+    public static LockingObservableCollection<T> ToLockingObservableCollection<T>(this IEnumerable<T> enumerable) {
+      return new LockingObservableCollection<T>(enumerable);
+    }
+
+    #endregion ToLocking...
 
   }
 

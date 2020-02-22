@@ -7,7 +7,7 @@
     <Authors>stricq</Authors>
     <Company>STR Programming Services</Company>
     <Description>Common code for other STR applications.</Description>
-    <Copyright>Copyright 2019 STR Programming Services</Copyright>
+    <Copyright>Copyright 2019,2020 STR Programming Services</Copyright>
     <PackageProjectUrl>https://github.com/stricq/STR.Common</PackageProjectUrl>
     <RepositoryUrl>https://github.com/stricq/STR.Common</RepositoryUrl>
     <PackageTags>str</PackageTags>

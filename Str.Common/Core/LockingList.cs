@@ -28,6 +28,10 @@ namespace Str.Common.Core {
       inner = new List<T>();
     }
 
+    public LockingList(int capacity) {
+      inner = new List<T>(capacity);
+    }
+
     public LockingList(IEnumerable<T> enumerable) {
       inner = enumerable == null ? new List<T>() : new List<T>(enumerable);
     }

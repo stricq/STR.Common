@@ -27,6 +27,8 @@ namespace Str.Common.Core {
 
     public LockingObservableCollection() { }
 
+    public LockingObservableCollection(int capacity) : base(capacity) { }
+
     public LockingObservableCollection(IEnumerable<T> enumerable) : base(enumerable) { }
 
     #endregion Constructors
@@ -208,11 +210,11 @@ namespace Str.Common.Core {
 
       #endregion Constructor
 
-      #region IDispose Implementation
+      #region IDisposable Implementation
 
       public void Dispose() => collection.blockReentrancyCount--;
 
-      #endregion IDispose Implementation
+      #endregion IDisposable Implementation
 
     }
 

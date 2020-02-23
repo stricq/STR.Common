@@ -17,6 +17,10 @@ namespace Str.Common.Core {
       Items = new LockingList<T>();
     }
 
+    public LockingCollection(int capacity) {
+      Items = new LockingList<T>(capacity);
+    }
+
     public LockingCollection(IEnumerable<T> enumerable) {
       Items = new LockingList<T>(enumerable);
     }

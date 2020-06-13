@@ -7,11 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Str.Common.Core {
 
-  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global",                            Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",                          Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBeProtected.Global",                  Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",                    Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global",                Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global", Justification = "This is a library.")]
   public class LockingObservableCollection<T> : LockingCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged {
 
@@ -19,7 +19,7 @@ namespace Str.Common.Core {
 
     private int blockReentrancyCount;
 
-    private SimpleMonitor monitor;
+    private SimpleMonitor? monitor;
 
     #endregion Private Fields
 
@@ -35,18 +35,18 @@ namespace Str.Common.Core {
 
     #region INotifyCollectionChanged Implementation
 
-    public virtual event NotifyCollectionChangedEventHandler CollectionChanged;
+    public virtual event NotifyCollectionChangedEventHandler? CollectionChanged;
 
     #endregion INotifyCollectionChanged Implementation
 
     #region INotifyPropertyChanged Implementation
 
-    event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged {
+    event PropertyChangedEventHandler? INotifyPropertyChanged.PropertyChanged {
       add    => PropertyChanged += value;
       remove => PropertyChanged -= value;
     }
 
-    protected virtual event PropertyChangedEventHandler PropertyChanged;
+    protected virtual event PropertyChangedEventHandler? PropertyChanged;
 
     #endregion INotifyPropertyChanged Implementation
 
@@ -131,7 +131,7 @@ namespace Str.Common.Core {
     }
 
     protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e) {
-      NotifyCollectionChangedEventHandler handler = CollectionChanged;
+      NotifyCollectionChangedEventHandler? handler = CollectionChanged;
 
       if (handler == null) return;
       //
@@ -172,15 +172,15 @@ namespace Str.Common.Core {
 
     private void OnIndexerPropertyChanged() => OnPropertyChanged(EventArgsCache.IndexerPropertyChanged);
 
-    private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index) {
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index) {
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index));
     }
 
-    private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index, int oldIndex) {
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index, int oldIndex) {
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index, oldIndex));
     }
 
-    private void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index) {
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object? oldItem, object? newItem, int index) {
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
     }
 

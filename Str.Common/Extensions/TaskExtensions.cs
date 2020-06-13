@@ -11,7 +11,7 @@ namespace Str.Common.Extensions {
 
     #region FireAndForget
 
-    public static void FireAndForget(this Task task, Action<Exception> onException = null) {
+    public static void FireAndForget(this Task task, Action<Exception>? onException = null) {
       try {
         task.ConfigureAwait(false);
       }
@@ -29,7 +29,7 @@ namespace Str.Common.Extensions {
       }
     }
 
-    public static void FireAndForget(this ValueTask task, Action<Exception> onException = null) {
+    public static void FireAndForget(this ValueTask task, Action<Exception>? onException = null) {
       try {
         task.ConfigureAwait(false);
       }

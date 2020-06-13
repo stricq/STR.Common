@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace Str.Common.Extensions {
 
-  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",       Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global",         Justification = "This is a library.")]
   public static class TaskHelper {
 
     #region Private Fields
 
-    private static TaskScheduler uiScheduler;
+    private static TaskScheduler? uiScheduler;
+
+    private static readonly ArgumentNullException SchedulerNotInitializedException = new ArgumentNullException(nameof(uiScheduler), "The UI TaskScheduler is not initialized.  Please call InitializeOnUiThread before use.");
 
     #endregion Private Fields
 
@@ -28,6 +30,8 @@ namespace Str.Common.Extensions {
     }
 
     public static Task RunOnUiThreadAsync(Action action, CancellationToken token) {
+      if (uiScheduler == null) throw SchedulerNotInitializedException;
+
       return Task.Factory.StartNew(action, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
@@ -36,6 +40,8 @@ namespace Str.Common.Extensions {
     }
 
     public static Task RunOnUiThreadAsync(Func<Task> func, CancellationToken token) {
+      if (uiScheduler == null) throw SchedulerNotInitializedException;
+
       return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
@@ -44,6 +50,8 @@ namespace Str.Common.Extensions {
     }
 
     public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<TResult> func, CancellationToken token) {
+      if (uiScheduler == null) throw SchedulerNotInitializedException;
+
       return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
@@ -52,6 +60,8 @@ namespace Str.Common.Extensions {
     }
 
     public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<Task<TResult>> func, CancellationToken token) {
+      if (uiScheduler == null) throw SchedulerNotInitializedException;
+
       return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler).Unwrap();
     }
 

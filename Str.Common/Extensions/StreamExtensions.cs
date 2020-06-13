@@ -13,17 +13,17 @@ namespace Str.Common.Extensions {
   // https://stackoverflow.com/questions/1540658/net-asynchronous-stream-read-write/4139427#4139427
   //
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",       Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global",         Justification = "This is a library.")]
   public static class StreamExtensions {
 
     private const int DefaultBufferSize = 32768;
 
-    public static Task CopyToAsync<T>(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage<T> message = null, Action<FileDownloadProgressMessage<T>> callback = null) {
-      return input.CopyToAsync(output, bufferSize, message as FileDownloadProgressMessage, callback as Action<FileDownloadProgressMessage>);
+    public static Task CopyToAsync<T>(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage<T>? message = null, Action<FileDownloadProgressMessage<T>?>? callback = null) where T : class {
+      return input.CopyToAsync(output, bufferSize, message as FileDownloadProgressMessage, callback as Action<FileDownloadProgressMessage?>);
     }
 
-    public static async Task CopyToAsync(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage message = null, Action<FileDownloadProgressMessage> callback = null) {
+    public static async Task CopyToAsync(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage? message = null, Action<FileDownloadProgressMessage?>? callback = null) {
       if (!input.CanRead)   throw new InvalidOperationException("Input stream must be open for reading.");
       if (!output.CanWrite) throw new InvalidOperationException("Output stream must be open for writing.");
 
@@ -38,7 +38,7 @@ namespace Str.Common.Extensions {
 
       Task<int> read = input.ReadAsync(buf[bufno], 0, buf[bufno].Length);
 
-      Task write = null;
+      Task? write = null;
 
       while(true) {
         //

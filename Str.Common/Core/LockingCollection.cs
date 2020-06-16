@@ -9,7 +9,7 @@ namespace Str.Common.Core {
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",           Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global", Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "MemberCanBeProtected.Global",         Justification = "This is a library.")]
-  public class LockingCollection<T> : IList<T>, IReadOnlyList<T> {
+  public class LockingCollection<T> : IList<T>, ICollection<T>, IEnumerable<T>, IReadOnlyList<T>, IReadOnlyCollection<T> {
 
     #region Constructors
 

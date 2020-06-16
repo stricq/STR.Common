@@ -155,7 +155,9 @@ namespace Str.Common.Core {
       // invalid for later listeners.  This keeps existing code working
       // (e.g. Selector.SelectedItems).
       //
-      if (CollectionChanged?.GetInvocationList().Length > 1) throw new InvalidOperationException("LockingObservableCollection does not allow re-entrancy.");
+      NotifyCollectionChangedEventHandler? collectionChanged = CollectionChanged;
+
+      if ((collectionChanged != null ? (collectionChanged.GetInvocationList().Length > 1 ? 1 : 0) : 0) != 0) throw new InvalidOperationException("LockingObservableCollection does not allow re-entrancy.");
     }
 
     protected IDisposable BlockReentrancy() {

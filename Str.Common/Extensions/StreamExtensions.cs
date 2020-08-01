@@ -3,6 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 
+using JetBrains.Annotations;
+
 using Str.Common.Messages;
 
 
@@ -24,10 +26,7 @@ namespace Str.Common.Extensions {
     }
 
     public static async Task CopyToAsync(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage? message = null, Action<FileDownloadProgressMessage?>? callback = null) {
-      if (!input.CanRead)   throw new InvalidOperationException("Input stream must be open for reading.");
-      if (!output.CanWrite) throw new InvalidOperationException("Output stream must be open for writing.");
-
-      if (bufferSize < 1) throw new ArgumentException("Argument may not be 0 or negative.", nameof(bufferSize));
+      ValidateCopyToAsyncArguments(input, output, bufferSize);
 
       byte[][] buf = { new byte[bufferSize], new byte[bufferSize] };
 
@@ -84,6 +83,14 @@ namespace Str.Common.Extensions {
       if (message != null) message.IsComplete = true;
 
       callback?.Invoke(message);
+    }
+
+    [AssertionMethod]
+    private static void ValidateCopyToAsyncArguments(Stream input, Stream output, int bufferSize) {
+      if (!input.CanRead)   throw new InvalidOperationException("Input stream must be open for reading.");
+      if (!output.CanWrite) throw new InvalidOperationException("Output stream must be open for writing.");
+
+      if (bufferSize < 1) throw new ArgumentException("Argument may not be 0 or negative.", nameof(bufferSize));
     }
 
   }

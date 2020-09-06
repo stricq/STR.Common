@@ -98,7 +98,7 @@ namespace Str.Common.Core {
     #region Private Methods
 
     private static TOut Parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration<T> {
-      TOut matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
+      TOut? matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
 
       if (matchingItem != null) return matchingItem;
 
@@ -114,7 +114,7 @@ namespace Str.Common.Core {
     public int CompareTo(object? other) {
       other ??= default(T);
 
-      return Comparer<T>.Default.Compare(Value, ((Enumeration<T>)other).Value);
+      return other == null ? 1 : Comparer<T>.Default.Compare(Value, ((Enumeration<T>)other).Value);
     }
 
     #endregion IComparable Implementation
@@ -208,7 +208,7 @@ namespace Str.Common.Core {
     #region Private Methods
 
     private static TOut Parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration {
-      TOut matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
+      TOut? matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
 
       if (matchingItem != null) return matchingItem;
 

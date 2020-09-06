@@ -33,7 +33,7 @@ namespace Str.Common.Core {
     }
 
     public LockingList(IEnumerable<T> enumerable) {
-      inner = enumerable == null ? new List<T>() : new List<T>(enumerable);
+      inner = new List<T>(enumerable);
     }
 
     #endregion Constructors

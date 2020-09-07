@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    NEXT_VER = '3.1.0'
+    NEXT_VER = '4.0.0'
 
     GIT_HASH = GIT_COMMIT.take(7)
   }

@@ -55,6 +55,8 @@ namespace Str.Common.Core {
     public void Move(int oldIndex, int newIndex) => MoveItem(oldIndex, newIndex);
 
     public virtual void MoveItem(int oldIndex, int newIndex) {
+      if (oldIndex == newIndex) return;
+
       CheckReentrancy();
 
       T removedItem = this[oldIndex];

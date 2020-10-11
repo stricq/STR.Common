@@ -19,8 +19,9 @@ namespace Str.Common.Tests {
     }
 
     [TestMethod, TestCategory("Unit")]
-    public void FireAndForgetTaskNoActionException() {
-      MethodAsync(true).FireAndForget(); // Exception is dropped and never propogates out
+    public void FireAndForgetTaskNoActionException()
+    {
+      MethodAsync(true).FireAndForget(); // Exception is dropped on the floor
     }
 
     [TestMethod, TestCategory("Unit")]

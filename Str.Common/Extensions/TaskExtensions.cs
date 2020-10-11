@@ -15,8 +15,8 @@ namespace Str.Common.Extensions {
       try {
         await task.ConfigureAwait(false);
       }
-      catch(Exception ex) when(onException != null) {
-        onException(ex);
+      catch(Exception ex) {
+        onException?.Invoke(ex);
       }
     }
 
@@ -33,8 +33,8 @@ namespace Str.Common.Extensions {
       try {
         await task.ConfigureAwait(false);
       }
-      catch(Exception ex) when(onException != null) {
-        onException(ex);
+      catch(Exception ex) {
+        onException?.Invoke(ex);
       }
     }
 

@@ -194,6 +194,12 @@ namespace Str.Common.Core {
 
     #endregion IList<T> Implementation
 
+    #region Public Properties
+
+    public int Capacity => inner.Capacity;
+
+    #endregion Public Properties
+
     #region Public Methods
 
     public void AddRange(IEnumerable<T> collection) {

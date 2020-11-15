@@ -7,13 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Str.Common", "Str.Common\St
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A51EE79F-F52E-4DDD-9FBB-F0A5BE4EC2DE}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
 		ReadMe.md = ReadMe.md
 		STR.Common.sln.DotSettings = STR.Common.sln.DotSettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Str.Common.Tests", "Str.Common.Tests\Str.Common.Tests.csproj", "{4FB30997-A73F-485F-BC45-62B6D3B8944C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Str.Common.Tests", "Str.Common.Tests\Str.Common.Tests.csproj", "{4FB30997-A73F-485F-BC45-62B6D3B8944C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

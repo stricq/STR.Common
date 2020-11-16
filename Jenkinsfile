@@ -35,6 +35,8 @@ pipeline {
         }
 
         powershell 'Write-Host "BRANCH_NAME = $env:BRANCH_NAME"'
+        powershell 'Write-Host "BRANCH = $env:BRANCH"'
+        powershell 'Write-Host "VERSION = $env:VERSION"'
         powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'
 
         powershell 'dotnet clean --configuration Debug'

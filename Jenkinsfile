@@ -23,8 +23,8 @@ pipeline {
         script {
           def values = "prerelease_4.0.0".split('_')
 
-          BRANCH  = values[0]
-          VERSION = values[1]
+          env.BRANCH  = values[0]
+          env.VERSION = values[1]
 
           if (BRANCH == 'release') {
             BRANCH_VERSION = "VERSION+GIT_HASH"

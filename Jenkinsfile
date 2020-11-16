@@ -18,22 +18,6 @@ pipeline {
     }
     stage('Unit Test') {
       steps {
-        script {
-          def values = "release_4.0.0".split('_')
-
-          env.BRANCH  = values[0]
-          env.VERSION = values[1]
-
-          if (env.BRANCH == 'release') {
-            env.BRANCH_VERSION = "${env.VERSION}+${env.GIT_HASH}"
-          }
-          else {
-            env.BRANCH_VERSION = "${env.VERSION}-pre.${env.JDATE}+${env.GIT_HASH}"
-          }
-        }
-
-        powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'
-
         powershell 'dotnet clean --configuration Debug'
         powershell 'dotnet build --configuration Debug --no-restore'
 
@@ -57,6 +41,8 @@ pipeline {
           }
         }
 
+        powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'
+
         powershell 'dotnet clean --configuration Release'
         powershell 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
       }
@@ -78,5 +64,10 @@ pipeline {
 //      powershell 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json'
 //    }
 //  }
+    post {
+      always {
+        cleanWs(cleanWhenSuccess: false)
+      }
+    }
   }
 }

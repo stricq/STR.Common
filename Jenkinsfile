@@ -61,7 +61,7 @@ pipeline {
         NUGET_API_KEY = credentials('nuget-api-key')
       }
       steps {
-        powershell 'dotnet nuget push **\\nupkgs\\*.nupkg -k "$env:NUGET_API_KEY" -s https://api.nuget.org/v3/index.json'
+        powershell 'dotnet nuget push "$env:WORKSPACE\\nuget\\*.nupkg" -k "$env:NUGET_API_KEY" -s https://api.nuget.org/v3/index.json'
       }
     }
   }

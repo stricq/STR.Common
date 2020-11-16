@@ -64,10 +64,10 @@ pipeline {
 //      powershell 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json'
 //    }
 //  }
-    post {
-      always {
-        cleanWs(cleanWhenSuccess: false)
-      }
+  }
+  post {
+    always {
+      cleanWs(cleanWhenSuccess: false)
     }
   }
 }

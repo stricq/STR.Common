@@ -25,24 +25,13 @@ pipeline {
           env.VERSION = values[1]
 
           if (env.BRANCH == 'release') {
-            env.BRANCH_VERSION = "VERSION+GIT_HASH"
+            env.BRANCH_VERSION = "${env.VERSION}+${env.GIT_HASH}"
           }
           else {
             env.BRANCH_VERSION = "${env.VERSION}-pre.${env.JDATE}+${env.GIT_HASH} 1"
           }
         }
 
-        powershell '''
-          if ($env:BRANCH -eq "release") {
-            $env:BRANCH_VERSION = "$env:VERSION+$GIT_HASH"
-          }
-          else {
-            $env:BRANCH_VERSION = "$env:VERSION-pre.$env:JDATE+$env:GIT_HASH 2"
-          }
-        '''
-
-        powershell 'Write-Host "BRANCH = $env:BRANCH"'
-        powershell 'Write-Host "VERSION = $env:VERSION"'
         powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'
 
         powershell 'dotnet clean --configuration Debug'

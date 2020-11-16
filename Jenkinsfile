@@ -43,6 +43,8 @@ pipeline {
           }
         }
 
+        powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'
+
         powershell 'dotnet clean --configuration Release'
         powershell 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
       }

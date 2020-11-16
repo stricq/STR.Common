@@ -19,7 +19,7 @@ pipeline {
     stage('Unit Test') {
       steps {
         script {
-          def values = "prerelease_4.0.0".split('_')
+          def values = "release_4.0.0".split('_')
 
           env.BRANCH  = values[0]
           env.VERSION = values[1]
@@ -28,7 +28,7 @@ pipeline {
             env.BRANCH_VERSION = "${env.VERSION}+${env.GIT_HASH}"
           }
           else {
-            env.BRANCH_VERSION = "${env.VERSION}-pre.${env.JDATE}+${env.GIT_HASH} 1"
+            env.BRANCH_VERSION = "${env.VERSION}-pre.${env.JDATE}+${env.GIT_HASH}"
           }
         }
 
@@ -44,16 +44,16 @@ pipeline {
       when { anyOf { branch 'prerelease*'; branch 'release*' } }
       steps {
         script {
-          def values = BRANCH_NAME.split('_')
+          def values = env.BRANCH_NAME.split('_')
 
-          BRANCH  = values[0]
-          VERSION = values[1]
+          env.BRANCH  = values[0]
+          env.VERSION = values[1]
 
-          if (BRANCH == 'release') {
-            BRANCH_VERSION = "%VERSION%+%GIT_HASH%"
+          if (env.BRANCH == 'release') {
+            env.BRANCH_VERSION = "${env.VERSION}+${env.GIT_HASH}"
           }
           else {
-            BRANCH_VERSION = "%VERSION%-pre.%JDATE%+%GIT_HASH%"
+            env.BRANCH_VERSION = "${env.VERSION}-pre.${env.JDATE}+${env.GIT_HASH}"
           }
         }
 

@@ -9,8 +9,6 @@ pipeline {
     GIT_HASH = GIT_COMMIT.take(7)
 
     JDATE = new Date().format("yyDDDHHmm", TimeZone.getTimeZone('America/Denver'))
-
-    BRANCH_VERSION = ''
   }
   stages {
     stage('Restore') {
@@ -30,16 +28,16 @@ pipeline {
       when { anyOf { branch 'prerelease*'; branch 'release*' } }
       steps {
         script {
-          def values = BRANCH_NAME.split('_')
+          def values = env.BRANCH_NAME.split('_')
 
-          BRANCH  = values[0]
-          VERSION = values[1]
+          env.BRANCH  = values[0]
+          env.VERSION = values[1]
 
-          if (BRANCH == 'release') {
-            BRANCH_VERSION = "%VERSION%+%GIT_HASH%"
+          if (env.BRANCH == 'release') {
+            env.BRANCH_VERSION = "${env.VERSION}+${env.GIT_HASH}"
           }
           else {
-            BRANCH_VERSION = "%VERSION%-pre.%JDATE%+%GIT_HASH%"
+            env.BRANCH_VERSION = "${env.VERSION}-pre.${env.JDATE}+${env.GIT_HASH}"
           }
         }
 
@@ -66,5 +64,10 @@ pipeline {
 //      powershell 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json'
 //    }
 //  }
+  }
+  post {
+    always {
+      cleanWs(cleanWhenSuccess: false)
+    }
   }
 }

@@ -20,6 +20,22 @@ pipeline {
     }
     stage('Unit Test') {
       steps {
+        script {
+          def values = "prerelease_4.0.0".split('_')
+
+          BRANCH  = values[0]
+          VERSION = values[1]
+
+          if (BRANCH == 'release') {
+            BRANCH_VERSION = "VERSION+GIT_HASH"
+          }
+          else {
+            BRANCH_VERSION = "VERSION-pre.JDATE+GIT_HASH"
+          }
+        }
+
+        powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'
+
         powershell 'dotnet clean --configuration Debug'
         powershell 'dotnet build --configuration Debug --no-restore'
 
@@ -42,8 +58,6 @@ pipeline {
             BRANCH_VERSION = "%VERSION%-pre.%JDATE%+%GIT_HASH%"
           }
         }
-
-        powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'
 
         powershell 'dotnet clean --configuration Release'
         powershell 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'

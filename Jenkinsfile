@@ -27,14 +27,13 @@ pipeline {
           env.VERSION = values[1]
 
           if (BRANCH == 'release') {
-            BRANCH_VERSION = "VERSION+GIT_HASH"
+            env.BRANCH_VERSION = "VERSION+GIT_HASH"
           }
           else {
-            BRANCH_VERSION = "VERSION-pre.JDATE+GIT_HASH"
+            env.BRANCH_VERSION = "VERSION-pre.JDATE+GIT_HASH"
           }
         }
 
-        powershell 'Write-Host "BRANCH_NAME = $env:BRANCH_NAME"'
         powershell 'Write-Host "BRANCH = $env:BRANCH"'
         powershell 'Write-Host "VERSION = $env:VERSION"'
         powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'

@@ -6,9 +6,9 @@ pipeline {
     disableConcurrentBuilds()
   }
   environment {
-    env.GIT_HASH = GIT_COMMIT.take(7)
+    GIT_HASH = GIT_COMMIT.take(7)
 
-    env.JDATE = new Date().format("yyDDDHHmm", TimeZone.getTimeZone('America/Denver'))
+    JDATE = new Date().format("yyDDDHHmm", TimeZone.getTimeZone('America/Denver'))
   }
   stages {
     stage('Restore') {

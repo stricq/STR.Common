@@ -3,6 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 
+using JetBrains.Annotations;
+
 using Str.Common.Messages;
 
 
@@ -13,21 +15,18 @@ namespace Str.Common.Extensions {
   // https://stackoverflow.com/questions/1540658/net-asynchronous-stream-read-write/4139427#4139427
   //
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",       Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global",         Justification = "This is a library.")]
   public static class StreamExtensions {
 
     private const int DefaultBufferSize = 32768;
 
-    public static Task CopyToAsync<T>(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage<T> message = null, Action<FileDownloadProgressMessage<T>> callback = null) {
-      return input.CopyToAsync(output, bufferSize, message as FileDownloadProgressMessage, callback as Action<FileDownloadProgressMessage>);
+    public static Task CopyToAsync<T>(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage<T>? message = null, Action<FileDownloadProgressMessage<T>?>? callback = null) where T : class {
+      return input.CopyToAsync(output, bufferSize, message as FileDownloadProgressMessage, callback as Action<FileDownloadProgressMessage?>);
     }
 
-    public static async Task CopyToAsync(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage message = null, Action<FileDownloadProgressMessage> callback = null) {
-      if (!input.CanRead)   throw new InvalidOperationException("Input stream must be open for reading.");
-      if (!output.CanWrite) throw new InvalidOperationException("Output stream must be open for writing.");
-
-      if (bufferSize < 1) throw new ArgumentException("Argument may not be 0 or negative.", nameof(bufferSize));
+    public static async Task CopyToAsync(this Stream input, Stream output, int bufferSize = DefaultBufferSize, FileDownloadProgressMessage? message = null, Action<FileDownloadProgressMessage?>? callback = null) {
+      ValidateCopyToAsyncArguments(input, output, bufferSize);
 
       byte[][] buf = { new byte[bufferSize], new byte[bufferSize] };
 
@@ -38,7 +37,7 @@ namespace Str.Common.Extensions {
 
       Task<int> read = input.ReadAsync(buf[bufno], 0, buf[bufno].Length);
 
-      Task write = null;
+      Task? write = null;
 
       while(true) {
         //
@@ -84,6 +83,14 @@ namespace Str.Common.Extensions {
       if (message != null) message.IsComplete = true;
 
       callback?.Invoke(message);
+    }
+
+    [AssertionMethod]
+    private static void ValidateCopyToAsyncArguments(Stream input, Stream output, int bufferSize) {
+      if (!input.CanRead)   throw new InvalidOperationException("Input stream must be open for reading.");
+      if (!output.CanWrite) throw new InvalidOperationException("Output stream must be open for writing.");
+
+      if (bufferSize < 1) throw new ArgumentException("Argument may not be 0 or negative.", nameof(bufferSize));
     }
 
   }

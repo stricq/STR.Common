@@ -43,8 +43,6 @@ namespace Str.Common.Extensions {
       List<T> list = new List<T>();
 
       Y<IEnumerable<T>>(f => items => {
-        if (items == null) return;
-
         list.AddRange(items.Where(predicate));
 
         foreach(T i in items) f(i.Children);
@@ -58,8 +56,6 @@ namespace Str.Common.Extensions {
       List<T> list = new List<T>();
 
       Y<IEnumerable<T>>(f => items => {
-        if(items == null) return;
-
         list.AddRange(items);
 
         foreach(T i in items) f(i.Children);

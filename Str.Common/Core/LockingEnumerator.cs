@@ -41,7 +41,7 @@ namespace Str.Common.Core {
 
     public T Current => inner.Current;
 
-    object IEnumerator.Current => Current;
+    object IEnumerator.Current => Current!;
 
     #endregion IEnumerator<T> Implementation
 

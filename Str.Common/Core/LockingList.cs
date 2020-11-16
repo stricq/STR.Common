@@ -9,8 +9,8 @@ namespace Str.Common.Core {
 
   // https://codereview.stackexchange.com/questions/7276/reader-writer-collection
 
-  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global",           Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",         Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "This is a library.")]
   public class LockingList<T> : IList<T> {
 
@@ -28,8 +28,12 @@ namespace Str.Common.Core {
       inner = new List<T>();
     }
 
+    public LockingList(int capacity) {
+      inner = new List<T>(capacity);
+    }
+
     public LockingList(IEnumerable<T> enumerable) {
-      inner = enumerable == null ? new List<T>() : new List<T>(enumerable);
+      inner = new List<T>(enumerable);
     }
 
     #endregion Constructors
@@ -189,6 +193,12 @@ namespace Str.Common.Core {
     }
 
     #endregion IList<T> Implementation
+
+    #region Public Properties
+
+    public int Capacity => inner.Capacity;
+
+    #endregion Public Properties
 
     #region Public Methods
 

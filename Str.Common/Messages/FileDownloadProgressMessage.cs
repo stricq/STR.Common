@@ -3,9 +3,9 @@
 
 namespace Str.Common.Messages {
 
-  [SuppressMessage("ReSharper", "UnusedMember.Global")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-  [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",               Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",         Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global", Justification = "This is a library.")]
   public class FileDownloadProgressMessage : MessageBase {
 
     public long BytesCurrent { get; set; }
@@ -18,11 +18,14 @@ namespace Str.Common.Messages {
 
   }
 
-  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-  [SuppressMessage("ReSharper", "UnusedMember.Global")]
-  public class FileDownloadProgressMessage<T> : FileDownloadProgressMessage {
+  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global",       Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",                 Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",           Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global",   Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global", Justification = "This is a library.")]
+  public class FileDownloadProgressMessage<T> : FileDownloadProgressMessage where T : class {
 
-    public T State { get; set; }
+    public T? State { get; set; }
 
   }
 

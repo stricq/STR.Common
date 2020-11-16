@@ -7,11 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Str.Common.Core {
 
-  [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global",                            Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",                          Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBeProtected.Global",                  Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",                    Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global",                Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global", Justification = "This is a library.")]
   public class LockingObservableCollection<T> : LockingCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged {
 
@@ -19,7 +19,7 @@ namespace Str.Common.Core {
 
     private int blockReentrancyCount;
 
-    private SimpleMonitor monitor;
+    private SimpleMonitor? monitor;
 
     #endregion Private Fields
 
@@ -27,24 +27,26 @@ namespace Str.Common.Core {
 
     public LockingObservableCollection() { }
 
+    public LockingObservableCollection(int capacity) : base(capacity) { }
+
     public LockingObservableCollection(IEnumerable<T> enumerable) : base(enumerable) { }
 
     #endregion Constructors
 
     #region INotifyCollectionChanged Implementation
 
-    public virtual event NotifyCollectionChangedEventHandler CollectionChanged;
+    public virtual event NotifyCollectionChangedEventHandler? CollectionChanged;
 
     #endregion INotifyCollectionChanged Implementation
 
     #region INotifyPropertyChanged Implementation
 
-    event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged {
+    event PropertyChangedEventHandler? INotifyPropertyChanged.PropertyChanged {
       add    => PropertyChanged += value;
       remove => PropertyChanged -= value;
     }
 
-    protected virtual event PropertyChangedEventHandler PropertyChanged;
+    protected virtual event PropertyChangedEventHandler? PropertyChanged;
 
     #endregion INotifyPropertyChanged Implementation
 
@@ -53,6 +55,8 @@ namespace Str.Common.Core {
     public void Move(int oldIndex, int newIndex) => MoveItem(oldIndex, newIndex);
 
     public virtual void MoveItem(int oldIndex, int newIndex) {
+      if (oldIndex == newIndex) return;
+
       CheckReentrancy();
 
       T removedItem = this[oldIndex];
@@ -129,7 +133,7 @@ namespace Str.Common.Core {
     }
 
     protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e) {
-      NotifyCollectionChangedEventHandler handler = CollectionChanged;
+      NotifyCollectionChangedEventHandler? handler = CollectionChanged;
 
       if (handler == null) return;
       //
@@ -153,7 +157,9 @@ namespace Str.Common.Core {
       // invalid for later listeners.  This keeps existing code working
       // (e.g. Selector.SelectedItems).
       //
-      if (CollectionChanged?.GetInvocationList().Length > 1) throw new InvalidOperationException("LockingObservableCollection does not allow re-entrancy.");
+      NotifyCollectionChangedEventHandler? collectionChanged = CollectionChanged;
+
+      if ((collectionChanged != null ? (collectionChanged.GetInvocationList().Length > 1 ? 1 : 0) : 0) != 0) throw new InvalidOperationException("LockingObservableCollection does not allow re-entrancy.");
     }
 
     protected IDisposable BlockReentrancy() {
@@ -170,15 +176,15 @@ namespace Str.Common.Core {
 
     private void OnIndexerPropertyChanged() => OnPropertyChanged(EventArgsCache.IndexerPropertyChanged);
 
-    private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index) {
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index) {
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index));
     }
 
-    private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index, int oldIndex) {
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index, int oldIndex) {
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index, oldIndex));
     }
 
-    private void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index) {
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, object? oldItem, object? newItem, int index) {
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
     }
 
@@ -208,11 +214,11 @@ namespace Str.Common.Core {
 
       #endregion Constructor
 
-      #region IDispose Implementation
+      #region IDisposable Implementation
 
       public void Dispose() => collection.blockReentrancyCount--;
 
-      #endregion IDispose Implementation
+      #endregion IDisposable Implementation
 
     }
 

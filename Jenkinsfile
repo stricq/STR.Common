@@ -28,7 +28,7 @@ pipeline {
             env.BRANCH_VERSION = "VERSION+GIT_HASH"
           }
           else {
-            env.BRANCH_VERSION = "VERSION-pre.JDATE+GIT_HASH 1"
+            env.BRANCH_VERSION = "env.VERSION-pre.env.JDATE+env.GIT_HASH 1"
           }
         }
 

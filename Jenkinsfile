@@ -60,9 +60,9 @@ pipeline {
       environment {
         NUGET_API_KEY = credentials('nuget-api-key')
       }
-      steps {
-        // powershell 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json'
-      }
+//    steps {
+//      powershell 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json'
+//    }
     }
   }
 }

@@ -24,11 +24,11 @@ pipeline {
           env.BRANCH  = values[0]
           env.VERSION = values[1]
 
-          if (BRANCH == 'release') {
+          if (env.BRANCH == 'release') {
             env.BRANCH_VERSION = "VERSION+GIT_HASH"
           }
           else {
-            env.BRANCH_VERSION = "VERSION-pre.JDATE+GIT_HASH"
+            env.BRANCH_VERSION = "VERSION-pre.JDATE+GIT_HASH 1"
           }
         }
 
@@ -37,7 +37,7 @@ pipeline {
             $env:BRANCH_VERSION = "$env:VERSION+$GIT_HASH"
           }
           else {
-            $env:BRANCH_VERSION = "$env:VERSION-pre.$env:JDATE+$env:GIT_HASH"
+            $env:BRANCH_VERSION = "$env:VERSION-pre.$env:JDATE+$env:GIT_HASH 2"
           }
         '''
 

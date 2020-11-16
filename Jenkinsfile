@@ -44,15 +44,15 @@ pipeline {
         }
 
         powershell 'dotnet clean --configuration Release'
-        powershell 'dotnet build --configuration Release --no-restore -p:Version="%BRANCH_VERSION%" -p:PublishRepositoryUrl=true'
+        powershell 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
       }
     }
     stage('Package') {
       when { anyOf { branch 'prerelease*'; branch 'release*' } }
       steps {
-        powershell 'Remove-Item -Recurse -Force "%WORKSPACE%\nuget"'
+        powershell 'Remove-Item -Recurse -Force "$env:WORKSPACE\nuget"'
 
-        powershell 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="%BRANCH_VERSION%" --output "%WORKSPACE%\nuget"'
+        powershell 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="$env:BRANCH_VERSION" --output "$env:WORKSPACE\nuget"'
       }
     }
 //  stage('Publish') {

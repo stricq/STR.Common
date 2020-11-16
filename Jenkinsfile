@@ -50,20 +50,20 @@ pipeline {
     stage('Package') {
       when { anyOf { branch 'prerelease*'; branch 'release*' } }
       steps {
-        powershell 'Remove-Item -Recurse -Force "$env:WORKSPACE\nuget"'
+        powershell 'Remove-Item -Recurse -Force "$env:WORKSPACE\\nuget" -ErrorAction Ignore'
 
-        powershell 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="$env:BRANCH_VERSION" --output "$env:WORKSPACE\nuget"'
+        powershell 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="$env:BRANCH_VERSION" --output "$env:WORKSPACE\\nuget"'
       }
     }
-//  stage('Publish') {
-//    when { anyOf { branch 'prerelease*'; branch 'release*' } }
-//    environment {
-//      NUGET_API_KEY = credentials('nuget-api-key')
-//    }
-//    steps {
-//      powershell 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json'
-//    }
-//  }
+    stage('Publish') {
+      when { anyOf { branch 'prerelease*'; branch 'release*' } }
+      environment {
+        NUGET_API_KEY = credentials('nuget-api-key')
+      }
+      steps {
+        powershell 'dotnet nuget push "$env:WORKSPACE\\nuget\\*.nupkg" -k "$env:NUGET_API_KEY" -s https://api.nuget.org/v3/index.json'
+      }
+    }
   }
   post {
     always {

@@ -6,11 +6,9 @@ pipeline {
     disableConcurrentBuilds()
   }
   environment {
-    GIT_HASH = GIT_COMMIT.take(7)
+    env.GIT_HASH = GIT_COMMIT.take(7)
 
-    JDATE = new Date().format("yyDDDHHmm", TimeZone.getTimeZone('America/Denver'))
-
-    BRANCH_VERSION = ''
+    env.JDATE = new Date().format("yyDDDHHmm", TimeZone.getTimeZone('America/Denver'))
   }
   stages {
     stage('Restore') {
@@ -33,6 +31,15 @@ pipeline {
             env.BRANCH_VERSION = "VERSION-pre.JDATE+GIT_HASH"
           }
         }
+
+        powershell '''
+          if ($env:BRANCH -eq "release") {
+            $env:BRANCH_VERSION = "$env:VERSION+$GIT_HASH"
+          }
+          else {
+            $env:BRANCH_VERSION = "$env:VERSION-pre.$env:JDATE+$env:GIT_HASH"
+          }
+        '''
 
         powershell 'Write-Host "BRANCH = $env:BRANCH"'
         powershell 'Write-Host "VERSION = $env:VERSION"'

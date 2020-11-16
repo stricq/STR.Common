@@ -1,58 +1,67 @@
 pipeline {
   agent any
-  environment {
-    NEXT_VER = '4.0.0'
+  options {
+    buildDiscarder logRotator(artifactNumToKeepStr: '15', numToKeepStr: '15')
 
+    disableConcurrentBuilds()
+  }
+  environment {
     GIT_HASH = GIT_COMMIT.take(7)
+
+    JDATE = new Date().format("yyDDDHHmm", TimeZone.getTimeZone('America/Denver'))
+
+    BRANCH_VERSION = ''
   }
   stages {
-  	stage('Environment') {
-  		steps {
+    stage('Restore') {
+      steps {
+        powershell 'dotnet restore -s "https://api.nuget.org/v3/index.json"'
+      }
+    }
+    stage('Unit Test') {
+      steps {
+        powershell 'dotnet clean --configuration Debug'
+        powershell 'dotnet build --configuration Debug --no-restore'
+
+        powershell 'dotnet test --configuration Debug --no-build --filter TestCategory=Unit'
+      }
+    }
+    stage('Build') {
+      when { anyOf { branch 'prerelease*'; branch 'release*' } }
+      steps {
         script {
-          env.JDATE = new Date().format("yyDDDHHmm")
+          def values = BRANCH_NAME.split('_')
+
+          BRANCH  = values[0]
+          VERSION = values[1]
+
+          if (BRANCH == 'release') {
+            BRANCH_VERSION = "%VERSION%+%GIT_HASH%"
+          }
+          else {
+            BRANCH_VERSION = "%VERSION%-pre.%JDATE%+%GIT_HASH%"
+          }
         }
-  		}
-  	}
-    stage('Build Debug') {
-      when { not { branch 'release' } }
-      steps {
-        bat 'dotnet clean --configuration Debug'
-        bat 'dotnet build --configuration Debug -p:Version="%NEXT_VER%-%GIT_BRANCH%.%JDATE%+%GIT_HASH%" -p:PublishRepositoryUrl=true'
+
+        powershell 'dotnet clean --configuration Release'
+        powershell 'dotnet build --configuration Release --no-restore -p:Version="%BRANCH_VERSION%" -p:PublishRepositoryUrl=true'
       }
     }
-    stage('Build Release') {
-      when { branch 'release' }
+    stage('Package') {
+      when { anyOf { branch 'prerelease*'; branch 'release*' } }
       steps {
-        bat 'dotnet clean --configuration Release'
-        bat 'dotnet build --configuration Release -p:Version="%NEXT_VER%+%GIT_HASH%"'
-      }
-    }
-    stage('Backup') {
-      when { not { anyOf { branch 'release'; branch 'master'; branch 'PR*' } } }
-      steps {
-        bat '''move /Y nupkgs\\* "t:\\Nuget Packages"
-        exit 0'''
-      }
-    }
-    stage('Pack Debug') {
-      when { not { anyOf { branch 'release'; branch 'master'; branch 'PR*' } } }
-      steps {
-        bat 'dotnet pack --configuration Debug --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="%NEXT_VER%-%GIT_BRANCH%.%JDATE%+%GIT_HASH%" --output nupkgs'
-      }
-    }
-    stage('Pack Release') {
-      when { branch 'release' }
-      steps {
-        bat 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="%NEXT_VER%+%GIT_HASH%" --output nupkgs'
+        powershell 'Remove-Item -Recurse -Force "%WORKSPACE%\nuget"'
+
+        powershell 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="%BRANCH_VERSION%" --output "%WORKSPACE%\nuget"'
       }
     }
     stage('Publish') {
-      when { not { anyOf { branch 'master'; branch 'PR*' } } }
+      when { anyOf { branch 'prerelease*'; branch 'release*' } }
       environment {
         NUGET_API_KEY = credentials('nuget-api-key')
       }
       steps {
-        bat 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json'
+        // powershell 'dotnet nuget push **\\nupkgs\\*.nupkg -k %NUGET_API_KEY% -s https://api.nuget.org/v3/index.json'
       }
     }
   }

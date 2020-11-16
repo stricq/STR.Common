@@ -50,9 +50,9 @@ pipeline {
     stage('Package') {
       when { anyOf { branch 'prerelease*'; branch 'release*' } }
       steps {
-        powershell 'Remove-Item -Recurse -Force "$env:WORKSPACE\nuget"'
+        powershell 'Remove-Item -Recurse -Force "$env:WORKSPACE\\nuget" -ErrorAction Ignore'
 
-        powershell 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="$env:BRANCH_VERSION" --output "$env:WORKSPACE\nuget"'
+        powershell 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="$env:BRANCH_VERSION" --output "$env:WORKSPACE\\nuget"'
       }
     }
 //  stage('Publish') {

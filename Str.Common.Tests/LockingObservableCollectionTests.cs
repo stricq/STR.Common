@@ -112,6 +112,27 @@ namespace Str.Common.Tests {
       Assert.AreEqual(1, changedCount);
     }
 
+    [TestMethod, TestCategory("Unit")]
+    public void OnCollectionChangedMoveEventSameIndexTest() {
+      TestClass tester1 = new TestClass();
+      TestClass tester2 = new TestClass();
+
+      LockingObservableCollection<TestClass> testCollection = new LockingObservableCollection<TestClass>();
+
+      int changedCount = 0;
+
+      testCollection.CollectionChanged += (sender, args) => {
+        if (args.Action == NotifyCollectionChangedAction.Move) ++changedCount;
+      };
+
+      testCollection.Add(tester1);
+      testCollection.Add(tester2);
+
+      testCollection.Move(1, 1);
+
+      Assert.AreEqual(0, changedCount);
+    }
+
     #endregion OnCollectionChanged Tests
 
     #region Private Class

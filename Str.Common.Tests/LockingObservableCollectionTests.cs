@@ -139,10 +139,8 @@ namespace Str.Common.Tests {
       TestClass tester1 = new TestClass();
       TestClass tester2 = new TestClass();
 
-      LockingObservableCollection<TestClass> testCollection = new LockingObservableCollection<TestClass>();
+      LockingObservableCollection<TestClass> testCollection = new LockingObservableCollection<TestClass> { tester1, tester2 };
 
-      testCollection.Add(tester1);
-      testCollection.Add(tester2);
 
       testCollection.Move(2, 1);
     }
@@ -152,10 +150,8 @@ namespace Str.Common.Tests {
       TestClass tester1 = new TestClass();
       TestClass tester2 = new TestClass();
 
-      LockingObservableCollection<TestClass> testCollection = new LockingObservableCollection<TestClass>();
+      LockingObservableCollection<TestClass> testCollection = new LockingObservableCollection<TestClass> { tester1, tester2 };
 
-      testCollection.Add(tester1);
-      testCollection.Add(tester2);
 
       testCollection.Move(1, 2);
     }

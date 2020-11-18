@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -110,6 +111,49 @@ namespace Str.Common.Tests {
       testCollection.Move(0, 1);
 
       Assert.AreEqual(1, changedCount);
+    }
+
+    [TestMethod, TestCategory("Unit")]
+    public void OnCollectionChangedMoveEventSameIndexTest() {
+      TestClass tester1 = new TestClass();
+      TestClass tester2 = new TestClass();
+
+      LockingObservableCollection<TestClass> testCollection = new LockingObservableCollection<TestClass>();
+
+      int changedCount = 0;
+
+      testCollection.CollectionChanged += (sender, args) => {
+        if (args.Action == NotifyCollectionChangedAction.Move) ++changedCount;
+      };
+
+      testCollection.Add(tester1);
+      testCollection.Add(tester2);
+
+      testCollection.Move(1, 1);
+
+      Assert.AreEqual(0, changedCount);
+    }
+
+    [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException)), TestCategory("Unit")]
+    public void OnCollectionChangedMoveSourceOutOfRangeTest() {
+      TestClass tester1 = new TestClass();
+      TestClass tester2 = new TestClass();
+
+      LockingObservableCollection<TestClass> testCollection = new LockingObservableCollection<TestClass> { tester1, tester2 };
+
+
+      testCollection.Move(2, 1);
+    }
+
+    [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException)), TestCategory("Unit")]
+    public void OnCollectionChangedMoveDestinationOutOfRangeTest() {
+      TestClass tester1 = new TestClass();
+      TestClass tester2 = new TestClass();
+
+      LockingObservableCollection<TestClass> testCollection = new LockingObservableCollection<TestClass> { tester1, tester2 };
+
+
+      testCollection.Move(1, 2);
     }
 
     #endregion OnCollectionChanged Tests

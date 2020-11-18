@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.0.0.0</Version>
     <Authors>stricq</Authors>
@@ -10,7 +10,7 @@
     <Copyright>Copyright 2019,2020 STR Programming Services</Copyright>
     <PackageProjectUrl>https://github.com/stricq/STR.Common</PackageProjectUrl>
     <RepositoryUrl>https://github.com/stricq/STR.Common</RepositoryUrl>
-    <PackageTags>str</PackageTags>
+    <PackageTags>str lockinglist lockingcollection lockingobservablecollection traverse</PackageTags>
     <PackageId>STR.Common</PackageId>
     <AssemblyName>Str.Common</AssemblyName>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -19,6 +19,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Nullable>enable</Nullable>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -12,7 +12,6 @@ namespace Str.Common.Core {
   [SuppressMessage("ReSharper", "MemberCanBeProtected.Global",                  Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",                    Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global",                Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global", Justification = "This is a library.")]
   public class LockingObservableCollection<T> : LockingCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged {
 
     #region Private Fields
@@ -35,7 +34,7 @@ namespace Str.Common.Core {
 
     #region INotifyCollectionChanged Implementation
 
-    public virtual event NotifyCollectionChangedEventHandler? CollectionChanged;
+    public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
     #endregion INotifyCollectionChanged Implementation
 
@@ -46,7 +45,7 @@ namespace Str.Common.Core {
       remove => PropertyChanged -= value;
     }
 
-    protected virtual event PropertyChangedEventHandler? PropertyChanged;
+    protected event PropertyChangedEventHandler? PropertyChanged;
 
     #endregion INotifyPropertyChanged Implementation
 
@@ -54,7 +53,7 @@ namespace Str.Common.Core {
 
     public void Move(int oldIndex, int newIndex) => MoveItem(oldIndex, newIndex);
 
-    public virtual void MoveItem(int oldIndex, int newIndex) {
+    public void MoveItem(int oldIndex, int newIndex) {
       if (oldIndex == newIndex) return;
 
       CheckReentrancy();
@@ -128,11 +127,11 @@ namespace Str.Common.Core {
 
     #region Protected Methods
 
-    protected virtual void OnPropertyChanged(PropertyChangedEventArgs e) {
+    protected void OnPropertyChanged(PropertyChangedEventArgs e) {
       PropertyChanged?.Invoke(this, e);
     }
 
-    protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e) {
+    protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e) {
       NotifyCollectionChangedEventHandler? handler = CollectionChanged;
 
       if (handler == null) return;

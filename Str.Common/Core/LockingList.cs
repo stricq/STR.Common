@@ -6,13 +6,13 @@ using System.Threading;
 
 
 namespace Str.Common.Core {
-
+  //
   // https://codereview.stackexchange.com/questions/7276/reader-writer-collection
-
+  //
   [SuppressMessage("ReSharper", "UnusedType.Global",           Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "UnusedMember.Global",         Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "This is a library.")]
-  public class LockingList<T> : IList<T> {
+  public sealed class LockingList<T> : IList<T> {
 
     #region Private Fields
 

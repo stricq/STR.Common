@@ -84,6 +84,10 @@ namespace Str.Common.Extensions {
       return new LockingObservableCollection<T>(enumerable);
     }
 
+    public static LockingReadOnlyCollection<T> ToLockingReadOnlyCollection<T>(this IEnumerable<T> enumerable) {
+      return new LockingReadOnlyCollection<T>(enumerable);
+    }
+
     #endregion ToLocking...
 
   }

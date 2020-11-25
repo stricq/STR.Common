@@ -7,18 +7,16 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Str.Common.Core {
 
-  [SuppressMessage("ReSharper", "UnusedType.Global",                            Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "UnusedMember.Global",                          Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "MemberCanBeProtected.Global",                  Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",                    Justification = "This is a library.")]
-  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global",                Justification = "This is a library.")]
-  public class LockingObservableCollection<T> : LockingCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged {
+  [SuppressMessage("ReSharper", "UnusedType.Global",             Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global",           Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBeProtected.Global",   Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",     Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "This is a library.")]
+  public sealed class LockingObservableCollection<T> : LockingCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged {
 
     #region Private Fields
 
     private int blockReentrancyCount;
-
-    private SimpleMonitor? monitor;
 
     #endregion Private Fields
 
@@ -45,7 +43,7 @@ namespace Str.Common.Core {
       remove => PropertyChanged -= value;
     }
 
-    protected event PropertyChangedEventHandler? PropertyChanged;
+    private event PropertyChangedEventHandler? PropertyChanged;
 
     #endregion INotifyPropertyChanged Implementation
 
@@ -125,13 +123,13 @@ namespace Str.Common.Core {
 
     #endregion LockingCollection<T> Overrides
 
-    #region Protected Methods
+    #region Private Methods
 
-    protected void OnPropertyChanged(PropertyChangedEventArgs e) {
+    private void OnPropertyChanged(PropertyChangedEventArgs e) {
       PropertyChanged?.Invoke(this, e);
     }
 
-    protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e) {
+    private void OnCollectionChanged(NotifyCollectionChangedEventArgs e) {
       NotifyCollectionChangedEventHandler? handler = CollectionChanged;
 
       if (handler == null) return;
@@ -148,7 +146,7 @@ namespace Str.Common.Core {
       }
     }
 
-    protected void CheckReentrancy() {
+    private void CheckReentrancy() {
       if (blockReentrancyCount <= 0) return;
       //
       // we can allow changes if there's only one listener - the problem
@@ -160,16 +158,6 @@ namespace Str.Common.Core {
 
       if ((collectionChanged != null ? (collectionChanged.GetInvocationList().Length > 1 ? 1 : 0) : 0) != 0) throw new InvalidOperationException("LockingObservableCollection does not allow re-entrancy.");
     }
-
-    protected IDisposable BlockReentrancy() {
-      blockReentrancyCount++;
-
-      return EnsureMonitorInitialized();
-    }
-
-    #endregion Protected Methods
-
-    #region Private Methods
 
     private void OnCountPropertyChanged() => OnPropertyChanged(EventArgsCache.CountPropertyChanged);
 
@@ -189,39 +177,7 @@ namespace Str.Common.Core {
 
     private void OnCollectionReset() => OnCollectionChanged(EventArgsCache.ResetCollectionChanged);
 
-    private SimpleMonitor EnsureMonitorInitialized() {
-      return monitor ??= new SimpleMonitor(this);
-    }
-
     #endregion Private Methods
-
-    #region Private Class
-
-    private sealed class SimpleMonitor : IDisposable {
-
-      #region Private Fields
-
-      private readonly LockingObservableCollection<T> collection;
-
-      #endregion Private Fields
-
-      #region Constructor
-
-      public SimpleMonitor(LockingObservableCollection<T> collection) {
-        this.collection = collection;
-      }
-
-      #endregion Constructor
-
-      #region IDisposable Implementation
-
-      public void Dispose() => collection.blockReentrancyCount--;
-
-      #endregion IDisposable Implementation
-
-    }
-
-    #endregion Private Class
 
   }
 

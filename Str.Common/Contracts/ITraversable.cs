@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 
 
 namespace Str.Common.Contracts {
 
-  public interface ITraversable<T> {
+  public interface ITraversable<out T> {
 
-    ObservableCollection<T> Children { get; }
+    IEnumerable<T> Children { get; }
 
   }
 

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace Str.Common.Extensions {
 
+  [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global",   Justification = "This is a library.")]
   public static class DoubleExtensions {
     //
     // https://docs.microsoft.com/en-us/dotnet/api/system.double.equals
@@ -14,10 +17,7 @@ namespace Str.Common.Extensions {
       // If the signs are different, return false except for +0 and -0.
       //
       if (longValue1 >> 63 != longValue2 >> 63) {
-        //
-        // ReSharper disable once CompareOfFloatsByEqualityOperator
-        //
-        return Value1 == Value2;
+        return Value1 == 0d && Value2 == 0d;
       }
 
       long diff = Math.Abs(longValue1 - longValue2);

@@ -37,7 +37,7 @@ namespace Str.Common.Core {
       list.CopyTo(array, index);
     }
 
-    bool ICollection<T>.IsReadOnly => true;
+    public bool IsReadOnly => true;
 
     void ICollection<T>.Add(T value) {
       throw notSupportedException;

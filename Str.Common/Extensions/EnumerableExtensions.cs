@@ -38,7 +38,7 @@ namespace Str.Common.Extensions {
     //
     // The Traverse method comes from Stack Overflow but I can no longer find the question
     //
-    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "This is a library.")]
     public static IEnumerable<T> Traverse<T>(this IEnumerable<T> source, Func<T, bool> predicate) where T : ITraversable<T> {
       List<T> list = new List<T>();
 
@@ -51,7 +51,7 @@ namespace Str.Common.Extensions {
       return list;
     }
 
-    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "This is a library.")]
     public static IEnumerable<T> Traverse<T>(this IEnumerable<T> source) where T : ITraversable<T> {
       List<T> list = new List<T>();
 
@@ -82,6 +82,10 @@ namespace Str.Common.Extensions {
 
     public static LockingObservableCollection<T> ToLockingObservableCollection<T>(this IEnumerable<T> enumerable) {
       return new LockingObservableCollection<T>(enumerable);
+    }
+
+    public static LockingReadOnlyCollection<T> ToLockingReadOnlyCollection<T>(this IEnumerable<T> enumerable) {
+      return new LockingReadOnlyCollection<T>(enumerable);
     }
 
     #endregion ToLocking...

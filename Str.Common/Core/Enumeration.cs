@@ -14,6 +14,7 @@ namespace Str.Common.Core {
   [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",     Justification = "This is a library.")]
   [SuppressMessage("ReSharper", "UnusedMember.Global",           Justification = "This is a library.")]
+  [SuppressMessage("ReSharper", "UnusedType.Global",             Justification = "This is a library.")]
   public class Enumeration<T> : IComparable where T : struct {
 
     #region Constructors

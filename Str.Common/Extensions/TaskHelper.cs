@@ -32,7 +32,12 @@ namespace Str.Common.Extensions {
     public static Task RunOnUiThreadAsync(Action action, CancellationToken token) {
       if (uiScheduler == null) throw SchedulerNotInitializedException;
 
-      return Task.Factory.StartNew(action, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
+      if (uiScheduler.Id != TaskScheduler.Current.Id) return Task.Factory.StartNew(action, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
+
+      action();
+
+      return Task.CompletedTask;
+
     }
 
     public static Task RunOnUiThreadAsync(Func<Task> func) {
@@ -42,7 +47,7 @@ namespace Str.Common.Extensions {
     public static Task RunOnUiThreadAsync(Func<Task> func, CancellationToken token) {
       if (uiScheduler == null) throw SchedulerNotInitializedException;
 
-      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
+      return uiScheduler.Id == TaskScheduler.Current.Id ? func() : Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
     public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<TResult> func) {
@@ -52,7 +57,7 @@ namespace Str.Common.Extensions {
     public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<TResult> func, CancellationToken token) {
       if (uiScheduler == null) throw SchedulerNotInitializedException;
 
-      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
+      return uiScheduler.Id == TaskScheduler.Current.Id ? Task.FromResult(func()) : Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler);
     }
 
     public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<Task<TResult>> func) {
@@ -62,7 +67,7 @@ namespace Str.Common.Extensions {
     public static Task<TResult> RunOnUiThreadAsync<TResult>(Func<Task<TResult>> func, CancellationToken token) {
       if (uiScheduler == null) throw SchedulerNotInitializedException;
 
-      return Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler).Unwrap();
+      return uiScheduler.Id == TaskScheduler.Current.Id ? func() : Task.Factory.StartNew(func, token, TaskCreationOptions.DenyChildAttach, uiScheduler).Unwrap();
     }
 
     #endregion Static Public Methods

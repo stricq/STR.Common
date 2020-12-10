@@ -22,7 +22,7 @@ namespace Str.Common.Extensions {
     #region Static Public Methods
 
     public static void InitializeOnUiThread() {
-      uiScheduler = TaskScheduler.Current; // TaskScheduler.FromCurrentSynchronizationContext();
+      uiScheduler = TaskScheduler.Current;
     }
 
     public static Task RunOnUiThreadAsync(Action action) {

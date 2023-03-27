@@ -14,16 +14,19 @@ pipeline {
     stage('Restore') {
       steps {
         dotnetRestore(sdk: '.Net 7', source: 'https://api.nuget.org/v3/index.json')
-        
-//      sh "dotnet restore -s 'https://api.nuget.org/v3/index.json'"
       }
     }
     stage('Unit Test') {
       steps {
-        sh 'dotnet clean --configuration Debug'
-        sh 'dotnet build --configuration Debug --no-restore'
+        dotnetClean(configuration: 'Debug')
+        dotnetBuild(configuration: 'Debug', noRestore: true)
 
-        sh 'dotnet test --configuration Debug --no-build --filter TestCategory=Unit'
+        dotnetTest(configuration: 'Debug', noBuild: true, filter: 'TestCategory=Unit')
+
+//      sh 'dotnet clean --configuration Debug'
+//      sh 'dotnet build --configuration Debug --no-restore'
+
+//      sh 'dotnet test --configuration Debug --no-build --filter TestCategory=Unit'
       }
     }
     stage('Build') {
@@ -45,8 +48,11 @@ pipeline {
 
         sh "echo BRANCH_VERSION = ${env:BRANCH_VERSION}"
 
-        sh 'dotnet clean --configuration Release'
-        sh 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
+        dotnetClean(configuration: 'Release')
+        dotnetBuild(configuration: 'Release', noRestore: true, version: "${env.BRANCH_VERSION}", publishRepositoryUrl: true)
+
+//      sh 'dotnet clean --configuration Release'
+//      sh 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
       }
     }
     stage('Package') {
@@ -54,7 +60,9 @@ pipeline {
       steps {
         sh "rm -rf '${env:WORKSPACE}/nuget'"
 
-        sh "dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}' --output '${env:WORKSPACE}/nuget'"
+        dotnetPack(configuration: 'Release', noBuild: true, includeSymbols: true, symbolPackageFormat: 'snupkg', packageVersion: "${env.BRANCH_VERSION}", output: "${env.WORKSPACE}/nuget")
+
+//      sh "dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}' --output '${env:WORKSPACE}/nuget'"
       }
     }
     stage('Publish') {
@@ -63,7 +71,9 @@ pipeline {
         NUGET_API_KEY = credentials('nuget-api-key')
       }
       steps {
-        sh "dotnet nuget push '${env:WORKSPACE}/nuget/*.nupkg' -k '${env:NUGET_API_KEY}' -s https://api.nuget.org/v3/index.json"
+        dotnetNugetPush(root: "${env:WORKSPACE}/nuget/*.nupkg", apiKeyId: "${env:NUGET_API_KEY}", source: 'https://api.nuget.org/v3/index.json')
+
+//      sh "dotnet nuget push '${env:WORKSPACE}/nuget/*.nupkg' -k '${env:NUGET_API_KEY}' -s https://api.nuget.org/v3/index.json"
       }
     }
   }

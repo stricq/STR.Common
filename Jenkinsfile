@@ -49,7 +49,7 @@ pipeline {
         sh "echo BRANCH_VERSION = ${env:BRANCH_VERSION}"
 
         dotnetClean(configuration: 'Release')
-        dotnetBuild(configuration: 'Release', noRestore: true, version: "${env.BRANCH_VERSION}", publishRepositoryUrl: true)
+        dotnetBuild(configuration: 'Release', noRestore: true, optionsString: "-p:Version=${env.BRANCH_VERSION} -p:PublishRepositoryUrl=true")
 
 //      sh 'dotnet clean --configuration Release'
 //      sh 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
@@ -60,7 +60,7 @@ pipeline {
       steps {
         sh "rm -rf '${env:WORKSPACE}/nuget'"
 
-        dotnetPack(configuration: 'Release', noBuild: true, includeSymbols: true, symbolPackageFormat: 'snupkg', packageVersion: "${env.BRANCH_VERSION}", output: "${env.WORKSPACE}/nuget")
+        dotnetPack(configuration: 'Release', noBuild: true, includeSymbols: true, optionsString: "-p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}'", output: "${env.WORKSPACE}/nuget")
 
 //      sh "dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}' --output '${env:WORKSPACE}/nuget'"
       }

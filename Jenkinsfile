@@ -13,15 +13,15 @@ pipeline {
   stages {
     stage('Restore') {
       steps {
-        powershell 'dotnet restore -s "https://api.nuget.org/v3/index.json"'
+        sh "dotnet restore -s 'https://api.nuget.org/v3/index.json'"
       }
     }
     stage('Unit Test') {
       steps {
-        powershell 'dotnet clean --configuration Debug'
-        powershell 'dotnet build --configuration Debug --no-restore'
+        sh 'dotnet clean --configuration Debug'
+        sh 'dotnet build --configuration Debug --no-restore'
 
-        powershell 'dotnet test --configuration Debug --no-build --filter TestCategory=Unit'
+        sh 'dotnet test --configuration Debug --no-build --filter TestCategory=Unit'
       }
     }
     stage('Build') {
@@ -41,18 +41,18 @@ pipeline {
           }
         }
 
-        powershell 'Write-Host "BRANCH_VERSION = $env:BRANCH_VERSION"'
+        sh "echo BRANCH_VERSION = ${env:BRANCH_VERSION}"
 
-        powershell 'dotnet clean --configuration Release'
-        powershell 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
+        sh 'dotnet clean --configuration Release'
+        sh 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
       }
     }
     stage('Package') {
       when { anyOf { branch 'prerelease*'; branch 'release*' } }
       steps {
-        powershell 'Remove-Item -Recurse -Force "$env:WORKSPACE\\nuget" -ErrorAction Ignore'
+        sh "rm -rf '${env:WORKSPACE}/nuget'"
 
-        powershell 'dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="$env:BRANCH_VERSION" --output "$env:WORKSPACE\\nuget"'
+        sh "dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}' --output '${env:WORKSPACE}/nuget'"
       }
     }
     stage('Publish') {
@@ -61,7 +61,7 @@ pipeline {
         NUGET_API_KEY = credentials('nuget-api-key')
       }
       steps {
-        powershell 'dotnet nuget push "$env:WORKSPACE\\nuget\\*.nupkg" -k "$env:NUGET_API_KEY" -s https://api.nuget.org/v3/index.json'
+        sh "dotnet nuget push '${env:WORKSPACE}/nuget/*.nupkg' -k '${env:NUGET_API_KEY}' -s https://api.nuget.org/v3/index.json"
       }
     }
   }

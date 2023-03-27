@@ -44,7 +44,7 @@ pipeline {
         sh "echo BRANCH_VERSION = ${env:BRANCH_VERSION}"
 
         dotnetClean(sdk: '.Net 7', configuration: 'Release')
-        dotnetBuild(sdk: '.Net 7', configuration: 'Release', noRestore: true, optionsString: "-p:Version=${env.BRANCH_VERSION} -p:PublishRepositoryUrl=true")
+        dotnetBuild(sdk: '.Net 7', configuration: 'Release', noRestore: true, optionsString: "-p:Version=${env.BRANCH_VERSION} -p:PublishRepositoryUrl=true -p:ContinuousIntegrationBuild=true")
       }
     }
     stage('Package') {
@@ -57,13 +57,8 @@ pipeline {
     }
     stage('Publish') {
       when { anyOf { branch 'prerelease*'; branch 'release*' } }
-      environment {
-        NUGET_API_KEY = credentials('nuget-api-key')
-      }
       steps {
         dotnetNuGetPush(sdk: '.Net 7', root: "${env:WORKSPACE}/nuget/*.nupkg", apiKeyId: 'nuget-api-key', source: 'https://api.nuget.org/v3/index.json')
-
-//      sh "dotnet nuget push '${env:WORKSPACE}/nuget/*.nupkg' -k '${env:NUGET_API_KEY}' -s https://api.nuget.org/v3/index.json"
       }
     }
   }

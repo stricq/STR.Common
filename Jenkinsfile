@@ -13,7 +13,9 @@ pipeline {
   stages {
     stage('Restore') {
       steps {
-        sh "dotnet restore -s 'https://api.nuget.org/v3/index.json'"
+        dotnetRestore(sdk: '.Net 7', source: 'https://api.nuget.org/v3/index.json')
+        
+//      sh "dotnet restore -s 'https://api.nuget.org/v3/index.json'"
       }
     }
     stage('Unit Test') {

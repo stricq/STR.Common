@@ -1,11 +1,9 @@
 ﻿
 
-namespace Str.Common.Messages {
+namespace Str.Common.Messages; 
 
-  public class MessageBase {
+public class MessageBase {
 
-    protected MessageBase() { }
-
-  }
+  protected MessageBase() { }
 
 }

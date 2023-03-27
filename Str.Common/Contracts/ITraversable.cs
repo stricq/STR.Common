@@ -1,12 +1,7 @@
-﻿using System.Collections.Generic;
+﻿namespace Str.Common.Contracts; 
 
+public interface ITraversable<out T> {
 
-namespace Str.Common.Contracts {
-
-  public interface ITraversable<out T> {
-
-    IEnumerable<T> Children { get; }
-
-  }
+  IEnumerable<T> Children { get; }
 
 }

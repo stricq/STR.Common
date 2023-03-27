@@ -1,11 +1,9 @@
 ﻿
 
-namespace Str.Common.Messages {
+namespace Str.Common.Messages; 
 
-  public class ApplicationClosingMessage : MessageBase {
+public class ApplicationClosingMessage : MessageBase {
 
-    public bool Cancel { get; set; }
-
-  }
+  public bool Cancel { get; set; }
 
 }

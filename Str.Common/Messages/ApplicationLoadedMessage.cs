@@ -1,7 +1,5 @@
 ﻿
 
-namespace Str.Common.Messages {
+namespace Str.Common.Messages; 
 
-  public class ApplicationLoadedMessage : MessageBase { }
-
-}
+public class ApplicationLoadedMessage : MessageBase { }

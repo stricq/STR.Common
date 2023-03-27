@@ -20,10 +20,10 @@ pipeline {
       steps {
         sh 'ls -la'
 
-        dotnetClean(configuration: 'Debug')
-        dotnetBuild(configuration: 'Debug', noRestore: true)
+        dotnetClean(sdk: '.Net 7', configuration: 'Debug')
+        dotnetBuild(sdk: '.Net 7', configuration: 'Debug', noRestore: true)
 
-        dotnetTest(configuration: 'Debug', noBuild: true, filter: 'TestCategory=Unit')
+        dotnetTest(sdk: '.Net 7', configuration: 'Debug', noBuild: true, filter: 'TestCategory=Unit')
 
 //      sh 'dotnet clean --configuration Debug'
 //      sh 'dotnet build --configuration Debug --no-restore'
@@ -50,8 +50,8 @@ pipeline {
 
         sh "echo BRANCH_VERSION = ${env:BRANCH_VERSION}"
 
-        dotnetClean(configuration: 'Release')
-        dotnetBuild(configuration: 'Release', noRestore: true, optionsString: "-p:Version=${env.BRANCH_VERSION} -p:PublishRepositoryUrl=true")
+        dotnetClean(sdk: '.Net 7', configuration: 'Release')
+        dotnetBuild(sdk: '.Net 7', configuration: 'Release', noRestore: true, optionsString: "-p:Version=${env.BRANCH_VERSION} -p:PublishRepositoryUrl=true")
 
 //      sh 'dotnet clean --configuration Release'
 //      sh 'dotnet build --configuration Release --no-restore -p:Version="$env:BRANCH_VERSION" -p:PublishRepositoryUrl=true'
@@ -62,7 +62,7 @@ pipeline {
       steps {
         sh "rm -rf '${env:WORKSPACE}/nuget'"
 
-        dotnetPack(configuration: 'Release', noBuild: true, includeSymbols: true, optionsString: "-p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}'", outputDirectory: "${env.WORKSPACE}/nuget")
+        dotnetPack(sdk: '.Net 7', configuration: 'Release', noBuild: true, includeSymbols: true, optionsString: "-p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}'", outputDirectory: "${env.WORKSPACE}/nuget")
 
 //      sh "dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}' --output '${env:WORKSPACE}/nuget'"
       }
@@ -73,7 +73,7 @@ pipeline {
         NUGET_API_KEY = credentials('nuget-api-key')
       }
       steps {
-        dotnetNugetPush(root: "${env:WORKSPACE}/nuget/*.nupkg", apiKeyId: "${env:NUGET_API_KEY}", source: 'https://api.nuget.org/v3/index.json')
+        dotnetNugetPush(sdk: '.Net 7', root: "${env:WORKSPACE}/nuget/*.nupkg", apiKeyId: "${env:NUGET_API_KEY}", source: 'https://api.nuget.org/v3/index.json')
 
 //      sh "dotnet nuget push '${env:WORKSPACE}/nuget/*.nupkg' -k '${env:NUGET_API_KEY}' -s https://api.nuget.org/v3/index.json"
       }

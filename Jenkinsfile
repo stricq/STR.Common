@@ -18,6 +18,8 @@ pipeline {
     }
     stage('Unit Test') {
       steps {
+        sh 'ls -la'
+
         dotnetClean(configuration: 'Debug')
         dotnetBuild(configuration: 'Debug', noRestore: true)
 

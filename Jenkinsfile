@@ -18,17 +18,10 @@ pipeline {
     }
     stage('Unit Test') {
       steps {
-        sh 'ls -la'
-
         dotnetClean(sdk: '.Net 7', configuration: 'Debug')
         dotnetBuild(sdk: '.Net 7', configuration: 'Debug', noRestore: true)
 
         dotnetTest(sdk: '.Net 7', configuration: 'Debug', noBuild: true, filter: 'TestCategory=Unit')
-
-//      sh 'dotnet clean --configuration Debug'
-//      sh 'dotnet build --configuration Debug --no-restore'
-
-//      sh 'dotnet test --configuration Debug --no-build --filter TestCategory=Unit'
       }
     }
     stage('Build') {
@@ -77,11 +70,6 @@ pipeline {
 
 //      sh "dotnet nuget push '${env:WORKSPACE}/nuget/*.nupkg' -k '${env:NUGET_API_KEY}' -s https://api.nuget.org/v3/index.json"
       }
-    }
-  }
-  post {
-    always {
-      cleanWs(cleanWhenSuccess: false)
     }
   }
 }

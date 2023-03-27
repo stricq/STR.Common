@@ -60,7 +60,7 @@ pipeline {
       steps {
         sh "rm -rf '${env:WORKSPACE}/nuget'"
 
-        dotnetPack(configuration: 'Release', noBuild: true, includeSymbols: true, optionsString: "-p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}'", output: "${env.WORKSPACE}/nuget")
+        dotnetPack(configuration: 'Release', noBuild: true, includeSymbols: true, optionsString: "-p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}'", outputDirectory: "${env.WORKSPACE}/nuget")
 
 //      sh "dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion='${env:BRANCH_VERSION}' --output '${env:WORKSPACE}/nuget'"
       }

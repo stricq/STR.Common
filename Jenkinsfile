@@ -10,6 +10,10 @@ pipeline {
 
     JDATE = new Date().format("yyDDDHHmm", TimeZone.getTimeZone('America/Denver'))
   }
+  tools {
+    dotnet('.Net 6')
+    dotnet('.Net 7')
+  }
   stages {
     stage('Restore') {
       steps {
@@ -18,10 +22,10 @@ pipeline {
     }
     stage('Unit Test') {
       steps {
-        dotnetClean(sdk: '.Net 7', configuration: 'Debug')
-        dotnetBuild(sdk: '.Net 7', configuration: 'Debug', noRestore: true)
+        dotnetClean(configuration: 'Debug')
+        dotnetBuild(configuration: 'Debug', noRestore: true)
 
-        dotnetTest(sdk: '.Net 7', configuration: 'Debug', noBuild: true, filter: 'TestCategory=Unit')
+        dotnetTest(configuration: 'Debug', noBuild: true, filter: 'TestCategory=Unit')
       }
     }
     stage('Build') {

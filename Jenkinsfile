@@ -11,8 +11,8 @@ pipeline {
     JDATE = new Date().format("yyDDDHHmm", TimeZone.getTimeZone('America/Denver'))
   }
   tools {
-    dotnetsdk('.Net 6')
-    dotnetsdk('.Net 7')
+    dotnetsdk('net7.0')
+    dotnetsdk('net6.0')
   }
   stages {
     stage('Restore') {

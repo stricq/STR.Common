@@ -17,17 +17,17 @@ pipeline {
   stages {
     stage('Restore') {
       steps {
-        pwsh('dotnet restore -s "https://api.nuget.org/v3/index.json"')
+        sh('dotnet restore -s "https://api.nuget.org/v3/index.json"')
 
 //      dotnetRestore(sdk: '.Net 7', source: 'https://api.nuget.org/v3/index.json')
       }
     }
     stage('Unit Test') {
       steps {
-        pwsh('dotnet clean --configuration Debug')
-        pwsh('dotnet build --configuration Debug --no-restore')
+        sh('dotnet clean --configuration Debug')
+        sh('dotnet build --configuration Debug --no-restore')
 
-        pwsh('dotnet test --configuration Debug --no-build --filter TestCategory=Unit')
+        sh('dotnet test --configuration Debug --no-build --filter TestCategory=Unit')
 
 //      dotnetClean(configuration: 'Debug')
 //      dotnetBuild(configuration: 'Debug', noRestore: true)

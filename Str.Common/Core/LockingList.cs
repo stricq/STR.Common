@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 
-namespace Str.Common.Core; 
+namespace Str.Common.Core;
 
 //
 // https://codereview.stackexchange.com/questions/7276/reader-writer-collection
@@ -199,6 +199,8 @@ public sealed class LockingList<T> : IList<T> {
   #endregion Public Properties
 
   #region Public Methods
+
+  // Implenent remaining List<T> methods here
 
   public void AddRange(IEnumerable<T> collection) {
     innerLock.EnterWriteLock();

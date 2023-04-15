@@ -200,6 +200,8 @@ public sealed class LockingList<T> : IList<T> {
 
   #region Public Methods
 
+  // Implenent remaining List<T> methods here
+
   public void AddRange(IEnumerable<T> collection) {
     innerLock.EnterWriteLock();
 

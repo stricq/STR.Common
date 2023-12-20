@@ -4,7 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using Str.Common.Core;
 
 
-namespace Str.Common.Extensions; 
+namespace Str.Common.Extensions;
+
 
 [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
 [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
@@ -69,7 +70,7 @@ public static class ObservableCollectionExtensions {
     }
 
     for(int i = 0; i < list.Count; ++i) {
-      if(itemList.Count == 0) break;
+      if (itemList.Count == 0) break;
 
       if (comparer(itemList[0], list[i]) >= 0) continue;
 

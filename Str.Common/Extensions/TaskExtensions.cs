@@ -4,10 +4,13 @@ using System.Runtime.CompilerServices;
 
 namespace Str.Common.Extensions;
 
+
 [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
 public static class TaskExtensions {
 
   #region FireAndForget
+
+  #pragma warning disable IDE1006
 
   [SuppressMessage("AsyncUsage", "AsyncFixer03:Fire-and-forget async-void methods or delegates", Justification = "Exceptions are handled.")]
   public static async void FireAndForget(this Task task, Action<Exception>? onException = null) {
@@ -48,6 +51,8 @@ public static class TaskExtensions {
       onException(context, ex);
     }
   }
+
+  #pragma warning restore IDE1006
 
   #endregion FireAndForget
 

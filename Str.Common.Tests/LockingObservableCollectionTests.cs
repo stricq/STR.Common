@@ -5,7 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Str.Common.Core;
 
 
-namespace Str.Common.Tests; 
+namespace Str.Common.Tests;
+
 
 [TestClass]
 public class LockingObservableCollectionTests {
@@ -16,7 +17,7 @@ public class LockingObservableCollectionTests {
   public void OnCollectionChangedAddEventTest() {
     TestClass tester = new();
 
-    LockingObservableCollection<TestClass> testCollection = new();
+    LockingObservableCollection<TestClass> testCollection = [];
 
     int changedCount = 0;
 
@@ -34,7 +35,7 @@ public class LockingObservableCollectionTests {
     TestClass tester1 = new();
     TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = new();
+    LockingObservableCollection<TestClass> testCollection = [];
 
     int changedCount = 0;
 
@@ -55,7 +56,7 @@ public class LockingObservableCollectionTests {
     TestClass tester1 = new();
     TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = new();
+    LockingObservableCollection<TestClass> testCollection = [];
 
     int changedCount = 0;
 
@@ -76,7 +77,7 @@ public class LockingObservableCollectionTests {
     TestClass tester1 = new();
     TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = new();
+    LockingObservableCollection<TestClass> testCollection = [];
 
     int changedCount = 0;
 
@@ -96,7 +97,7 @@ public class LockingObservableCollectionTests {
     TestClass tester1 = new();
     TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = new();
+    LockingObservableCollection<TestClass> testCollection = [];
 
     int changedCount = 0;
 
@@ -117,7 +118,7 @@ public class LockingObservableCollectionTests {
     TestClass tester1 = new();
     TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = new();
+    LockingObservableCollection<TestClass> testCollection = [];
 
     int changedCount = 0;
 
@@ -138,7 +139,7 @@ public class LockingObservableCollectionTests {
     TestClass tester1 = new();
     TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = new() { tester1, tester2 };
+    LockingObservableCollection<TestClass> testCollection = [ tester1, tester2 ];
 
 
     testCollection.Move(2, 1);
@@ -149,8 +150,7 @@ public class LockingObservableCollectionTests {
     TestClass tester1 = new();
     TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = new() { tester1, tester2 };
-
+    LockingObservableCollection<TestClass> testCollection = [ tester1, tester2 ];
 
     testCollection.Move(1, 2);
   }
@@ -159,7 +159,7 @@ public class LockingObservableCollectionTests {
 
   #region Private Class
 
-  private class TestClass { }
+  private class TestClass;
 
   #endregion Private Class
 

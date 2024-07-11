@@ -1,139 +1,143 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
+using JetBrains.Annotations;
 
-namespace Str.Common.Core; 
 
-[SuppressMessage("ReSharper", "MemberCanBePrivate.Global",           Justification = "This is a library.")]
+namespace Str.Common.Core;
+
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
 [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global", Justification = "This is a library.")]
-[SuppressMessage("ReSharper", "MemberCanBeProtected.Global",         Justification = "This is a library.")]
+[SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "This is a library.")]
 public class LockingCollection<T> : IList<T>, IReadOnlyList<T> {
 
-  #region Constructors
+    #region Constructors
 
-  public LockingCollection() {
-    Items = new LockingList<T>();
-  }
-
-  public LockingCollection(int capacity) {
-    Items = new LockingList<T>(capacity);
-  }
-
-  public LockingCollection(IEnumerable<T> enumerable) {
-    Items = new LockingList<T>(enumerable);
-  }
-
-  #endregion Constructors
-
-  #region IList<T> Implementation
-
-  public T this[int index] {
-    get => Items[index];
-    set {
-      if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
-
-      if ((uint)index >= (uint)Items.Count) throw new IndexOutOfRangeException();
-
-      SetItem(index, value);
+    public LockingCollection() {
+        Items = new LockingList<T>();
     }
-  }
 
-  public int Count => Items.Count;
+    public LockingCollection(int capacity) {
+        Items = new LockingList<T>(capacity);
+    }
 
-  public void Add(T item) {
-    if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
+    public LockingCollection(IEnumerable<T> enumerable) {
+        Items = new LockingList<T>(enumerable);
+    }
 
-    int index = Items.Count;
+    #endregion Constructors
 
-    InsertItem(index, item);
-  }
+    #region IList<T> Implementation
 
-  public void Clear() {
-    if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
+    public T this[int index] {
+        get => Items[index];
+        set {
+            if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
 
-    ClearItems();
-  }
+            if ((uint)index >= (uint)Items.Count) throw new IndexOutOfRangeException();
 
-  public void CopyTo(T[] array, int index) {
-    Items.CopyTo(array, index);
-  }
+            SetItem(index, value);
+        }
+    }
 
-  public bool Contains(T item) {
-    return Items.Contains(item);
-  }
+    public int Count => Items.Count;
 
-  public IEnumerator<T> GetEnumerator() {
-    return Items.GetEnumerator();
-  }
+    public void Add(T item) {
+        if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
 
-  public int IndexOf(T item) {
-    return Items.IndexOf(item);
-  }
+        int index = Items.Count;
 
-  public void Insert(int index, T item) {
-    if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
+        InsertItem(index, item);
+    }
 
-    if ((uint) index >= (uint) Items.Count) throw new IndexOutOfRangeException();
+    public void Clear() {
+        if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
 
-    InsertItem(index, item);
-  }
+        ClearItems();
+    }
 
-  public bool Remove(T item) {
-    if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
+    public void CopyTo(T[] array, int index) {
+        Items.CopyTo(array, index);
+    }
 
-    int index = Items.IndexOf(item);
+    public bool Contains(T item) {
+        return Items.Contains(item);
+    }
 
-    if (index < 0) return false;
+    [MustDisposeResource]
+    public IEnumerator<T> GetEnumerator() {
+        return Items.GetEnumerator();
+    }
 
-    RemoveItem(index);
+    public int IndexOf(T item) {
+        return Items.IndexOf(item);
+    }
 
-    return true;
-  }
+    public void Insert(int index, T item) {
+        if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
 
-  public void RemoveAt(int index) {
-    if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
+        if ((uint)index >= (uint)Items.Count) throw new IndexOutOfRangeException();
 
-    if ((uint) index >= (uint) Items.Count) throw new IndexOutOfRangeException();
+        InsertItem(index, item);
+    }
 
-    RemoveItem(index);
-  }
+    public bool Remove(T item) {
+        if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
 
-  #endregion IList<T> Implementation
+        int index = Items.IndexOf(item);
 
-  #region ICollection<T> Implementation
+        if (index < 0) return false;
 
-  bool ICollection<T>.IsReadOnly => Items.IsReadOnly;
+        RemoveItem(index);
 
-  #endregion ICollection<T> Implementation
+        return true;
+    }
 
-  #region IEnumerable Implementation
+    public void RemoveAt(int index) {
+        if (Items.IsReadOnly) throw new NotSupportedException("Collection is read only.");
 
-  IEnumerator IEnumerable.GetEnumerator() {
-    return (Items as IEnumerable).GetEnumerator();
-  }
+        if ((uint)index >= (uint)Items.Count) throw new IndexOutOfRangeException();
 
-  #endregion IEnumerable Implementation
+        RemoveItem(index);
+    }
 
-  #region Protected Methods
+    #endregion IList<T> Implementation
 
-  protected IList<T> Items { get; }
+    #region ICollection<T> Implementation
 
-  protected virtual void SetItem(int index, T item) {
-    Items[index] = item;
-  }
+    bool ICollection<T>.IsReadOnly => Items.IsReadOnly;
 
-  protected virtual void RemoveItem(int index) {
-    Items.RemoveAt(index);
-  }
+    #endregion ICollection<T> Implementation
 
-  protected virtual void InsertItem(int index, T item) {
-    Items.Insert(index, item);
-  }
+    #region IEnumerable Implementation
 
-  protected virtual void ClearItems() {
-    Items.Clear();
-  }
+    [MustDisposeResource]
+    IEnumerator IEnumerable.GetEnumerator() {
+        return (Items as IEnumerable).GetEnumerator();
+    }
 
-  #endregion Protected Methods
+    #endregion IEnumerable Implementation
+
+    #region Protected Methods
+
+    protected IList<T> Items { get; }
+
+    protected virtual void SetItem(int index, T item) {
+        Items[index] = item;
+    }
+
+    protected virtual void RemoveItem(int index) {
+        Items.RemoveAt(index);
+    }
+
+    protected virtual void InsertItem(int index, T item) {
+        Items.Insert(index, item);
+    }
+
+    protected virtual void ClearItems() {
+        Items.Clear();
+    }
+
+    #endregion Protected Methods
 
 }

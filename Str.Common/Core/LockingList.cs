@@ -26,7 +26,7 @@ public sealed class LockingList<T> : IList<T> {
     #region Constructors
 
     public LockingList() {
-        inner = new List<T>();
+        inner = [];
     }
 
     public LockingList(int capacity) {
@@ -34,7 +34,7 @@ public sealed class LockingList<T> : IList<T> {
     }
 
     public LockingList(IEnumerable<T> enumerable) {
-        inner = new List<T>(enumerable);
+        inner = [..enumerable];
     }
 
     #endregion Constructors
@@ -203,9 +203,9 @@ public sealed class LockingList<T> : IList<T> {
     #endregion Public Properties
 
     #region Public Methods
-
+    //
     // Implement remaining List<T> methods here.
-
+    //
     public void AddRange(IEnumerable<T> collection) {
         innerLock.EnterWriteLock();
 

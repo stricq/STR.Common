@@ -7,7 +7,8 @@ using Str.Common.Core;
 using Str.Common.Extensions;
 
 
-namespace Str.Common.Tests; 
+namespace Str.Common.Tests;
+
 
 [TestClass]
 public class TraverseTests {
@@ -22,7 +23,7 @@ public class TraverseTests {
 
   [ClassInitialize]
   public static void ClassInit(TestContext _) {
-    root = new LockingObservableCollection<TestClass>();
+    root = [];
 
     TestClass branch1 = new() { Value = 1 };
     TestClass branch2 = new() { Value = 2 };
@@ -68,7 +69,7 @@ public class TraverseTests {
   [TestMethod, TestCategory("Unit")]
   [SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
   public void TraverseTestEmptyTreeNoPredicate() {
-    LockingObservableCollection<TestClass> test = new();
+    LockingObservableCollection<TestClass> test = [];
 
     IEnumerable<TestClass> flat = test.Traverse();
 
@@ -80,7 +81,7 @@ public class TraverseTests {
   [TestMethod, TestCategory("Unit")]
   [SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
   public void TraverseTestEmptyTreeWithPredicate() {
-    LockingObservableCollection<TestClass> test = new();
+    LockingObservableCollection<TestClass> test = [];
 
     IEnumerable<TestClass> flat = test.Traverse(tc => tc.Value == 1);
 
@@ -93,11 +94,12 @@ public class TraverseTests {
 
 }
 
+
 public class TestClass : ITraversable<TestClass> {
 
-  public int Value { get; set; }
+  public int Value { get; init; }
 
-  public LockingObservableCollection<TestClass> Children { get; } = new();
+  public LockingObservableCollection<TestClass> Children { get; } = [];
 
   IEnumerable<TestClass> ITraversable<TestClass>.Children => Children;
 

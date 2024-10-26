@@ -14,7 +14,7 @@ public class LockingCollection<T> : IList<T>, IReadOnlyList<T> {
     #region Constructors
 
     public LockingCollection() {
-        Items = new LockingList<T>();
+        Items = [];
     }
 
     public LockingCollection(int capacity) {

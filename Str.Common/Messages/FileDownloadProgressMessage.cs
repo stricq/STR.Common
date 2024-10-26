@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 
-namespace Str.Common.Messages; 
+namespace Str.Common.Messages;
+
 
 [SuppressMessage("ReSharper", "UnusedMember.Global",               Justification = "This is a library.")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",         Justification = "This is a library.")]
@@ -17,6 +18,7 @@ public class FileDownloadProgressMessage : MessageBase {
   public double PercentComplete => BytesTotal == 0 ? 0 : (double)BytesCurrent / BytesTotal;
 
 }
+
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global",       Justification = "This is a library.")]
 [SuppressMessage("ReSharper", "UnusedMember.Global",                 Justification = "This is a library.")]

@@ -53,7 +53,7 @@ jobs:
 
         TZ=America/Denver
 
-        printf -v jdate '%(%y%j.%H%m)T'
+        printf -v jdate '%(%y%j%H%M)T'
 
         branch_name=${{github.ref_name}}
 

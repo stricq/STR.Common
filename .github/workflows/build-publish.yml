@@ -51,7 +51,7 @@ jobs:
 
         branch_name=${{github.ref_name}}
 
-        def values = ${branch_name.split('_')}
+        values = (${branch_name//_/ })
 
         branch  = values[0]
         version = values[1]

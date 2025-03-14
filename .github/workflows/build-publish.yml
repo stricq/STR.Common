@@ -1,5 +1,5 @@
 ﻿name: Build and Publish
-on: [push, workflow_dispatch]
+on: [create, push, workflow_dispatch]
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -64,8 +64,6 @@ jobs:
 
         if [ $branch == 'release' ]; then
           branch_version="${version}+${git_hash}"
-        elif [ $branch == 'dev' ]; then
-          branch_version="9.0.0-pre.${jdate}+${git_hash}"
         else
           branch_version="${version}-pre.${jdate}+${git_hash}"
         fi

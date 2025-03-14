@@ -56,15 +56,15 @@ jobs:
         branch=${values[0]}
         version=${values[1]}
 
-        if [$branch == 'release']; then
+        if [ $branch == 'release' ]; then
           branch_version="${version}+${git_hash}"
-        elif [$branch == 'dev']; then
+        elif [ $branch == 'dev' ]; then
           branch_version="9.0-pre.${jdate}+${git_hash}"
         else
           branch_version="${version}-pre.${jdate}+${git_hash}"
         fi
 
-        echo"BRANCH_VERSION=${branch_version}" >> "$GITHUB_ENV"
+        echo "BRANCH_VERSION=${branch_version}" >> "$GITHUB_ENV"
 
     - name: Restore Nuget Packages
       run: dotnet restore --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"

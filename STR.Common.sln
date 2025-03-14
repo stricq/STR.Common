@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75 d17.13
+VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Str.Common", "Str.Common\Str.Common.csproj", "{5E07704B-4938-4D5F-A695-F87E016AC7BF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A51EE79F-F52E-4DDD-9FBB-F0A5BE4EC2DE}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
+		Jenkinsfile.old = Jenkinsfile.old
 		ReadMe.md = ReadMe.md
 		STR.Common.sln.DotSettings = STR.Common.sln.DotSettings
 	EndProjectSection

@@ -1,5 +1,5 @@
 ﻿name: Build and Publish
-on: [push]
+on: [push, workflow_dispatch]
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -82,3 +82,12 @@ jobs:
 
     - name: Build Release
       run: dotnet build --configuration Release --no-restore -p:Version="$BRANCH_VERSION" -p:PublishRepositoryUrl=true
+
+    - name: Package Nuget
+      run: dotnet pack --configuration Release --no-build --include-symbols -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:PackageVersion="$BRANCH_VERSION" --output "$NUGET_DIR"
+
+    - name: Publish Nuget
+      if: 1 == 0
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: dotnet nuget push "$NUGET_DIR\*.nupkg" -k "$NUGET_API_KEY"

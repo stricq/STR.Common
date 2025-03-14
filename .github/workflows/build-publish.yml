@@ -23,6 +23,8 @@ jobs:
         github_sha_hash=${{ github.sha }}
         github_sha_short="${github_sha_hash:0:7}"
 
+        echo "github_sha_short=${github_sha_short}" >> "$GITHUB_ENV"
+
     - run: |
         dotnet restore -s "https://api.nuget.org/v3/index.json"
 

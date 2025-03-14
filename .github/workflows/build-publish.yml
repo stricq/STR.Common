@@ -17,6 +17,7 @@ jobs:
       with:
         dotnet-version: 9.x
         cache: true
+        cache-dependency-path: **/packages.lock.json
 
     - name: Restore Nuget Packages
       run: dotnet restore --locked-mode --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
@@ -42,6 +43,7 @@ jobs:
       with:
         dotnet-version: 9.x
         cache: true
+        cache-dependency-path: **/packages.lock.json
 
     - name: Setup Environment Variables
       run: |

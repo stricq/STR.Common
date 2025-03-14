@@ -51,13 +51,16 @@ jobs:
 
         branch_name=${{github.ref_name}}
 
-        values = $(${branch_name//_/ })
+        values=(${branch_name//_/ })
 
         branch  = values[0]
         version = values[1]
 
         if (branch == 'release') {
           branch_version = "${version}+${git_hash}"
+        }
+        elif (branch == 'dev') {
+          branch_version = "9.0-pre.${jdate}+${git_hash}"
         }
         else {
           branch_version = "${version}-pre.${jdate}+${git_hash}"

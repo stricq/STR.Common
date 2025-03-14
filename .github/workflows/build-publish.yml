@@ -64,6 +64,8 @@ jobs:
           branch_version="${version}-pre.${jdate}+${git_hash}"
         fi
 
+        echo $branch_version
+
         echo "BRANCH_VERSION='${branch_version}'" >> "$GITHUB_ENV"
 
     - name: Restore Nuget Packages

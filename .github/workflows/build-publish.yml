@@ -30,8 +30,9 @@ jobs:
       run: dotnet test --configuration Debug --no-build --filter TestCategory=Unit
 
   build_publish:
+    # if: ${{ startsWith(github.ref_name, 'prerelease') || startsWith(github.ref_name, 'release') }}
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref_name, 'prerelease') || startsWith(github.ref_name, 'release') }}
+    needs: [unit_tests]
     steps:
     - uses: actions/checkout@v4
 

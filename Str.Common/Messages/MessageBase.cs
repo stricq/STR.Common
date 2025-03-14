@@ -1,6 +1,5 @@
-﻿
+﻿namespace Str.Common.Messages;
 
-namespace Str.Common.Messages; 
 
 public class MessageBase {
 

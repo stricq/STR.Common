@@ -33,7 +33,7 @@ public static class ObservableCollectionExtensions {
   public static void OrderedMerge<T>(this ObservableCollection<T> list, IEnumerable<T> items) where T : IComparable<T> {
     List<T> itemList = items.ToList();
 
-    if (!itemList.Any()) return;
+    if (itemList.Count == 0) return;
 
     if (!list.Any()) {
       list.AddRange(itemList);

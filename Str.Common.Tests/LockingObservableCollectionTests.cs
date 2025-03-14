@@ -11,156 +11,156 @@ namespace Str.Common.Tests;
 [TestClass]
 public class LockingObservableCollectionTests {
 
-  #region OnCollectionChanged Tests
+    #region OnCollectionChanged Tests
 
-  [TestMethod, TestCategory("Unit")]
-  public void OnCollectionChangedAddEventTest() {
-    TestClass tester = new();
+    [TestMethod, TestCategory("Unit")]
+    public void OnCollectionChangedAddEventTest() {
+        TestClass tester = new();
 
-    LockingObservableCollection<TestClass> testCollection = [];
+        LockingObservableCollection<TestClass> testCollection = [];
 
-    int changedCount = 0;
+        int changedCount = 0;
 
-    testCollection.CollectionChanged += (_, args) => {
-      if (args.Action == NotifyCollectionChangedAction.Add) ++changedCount;
-    };
+        testCollection.CollectionChanged += (_, args) => {
+            if (args.Action == NotifyCollectionChangedAction.Add) ++changedCount;
+        };
 
-    testCollection.Add(tester);
+        testCollection.Add(tester);
 
-    Assert.AreEqual(1, changedCount);
-  }
+        Assert.AreEqual(1, changedCount);
+    }
 
-  [TestMethod, TestCategory("Unit")]
-  public void OnCollectionChangedRemoveEventTest() {
-    TestClass tester1 = new();
-    TestClass tester2 = new();
+    [TestMethod, TestCategory("Unit")]
+    public void OnCollectionChangedRemoveEventTest() {
+        TestClass tester1 = new();
+        TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = [];
+        LockingObservableCollection<TestClass> testCollection = [];
 
-    int changedCount = 0;
+        int changedCount = 0;
 
-    testCollection.CollectionChanged += (_, args) => {
-      if (args.Action == NotifyCollectionChangedAction.Remove) ++changedCount;
-    };
+        testCollection.CollectionChanged += (_, args) => {
+            if (args.Action == NotifyCollectionChangedAction.Remove) ++changedCount;
+        };
 
-    testCollection.Add(tester1);
-    testCollection.Add(tester2);
+        testCollection.Add(tester1);
+        testCollection.Add(tester2);
 
-    testCollection.Remove(tester1);
+        testCollection.Remove(tester1);
 
-    Assert.AreEqual(1, changedCount);
-  }
+        Assert.AreEqual(1, changedCount);
+    }
 
-  [TestMethod, TestCategory("Unit")]
-  public void OnCollectionChangedResetEventTest() {
-    TestClass tester1 = new();
-    TestClass tester2 = new();
+    [TestMethod, TestCategory("Unit")]
+    public void OnCollectionChangedResetEventTest() {
+        TestClass tester1 = new();
+        TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = [];
+        LockingObservableCollection<TestClass> testCollection = [];
 
-    int changedCount = 0;
+        int changedCount = 0;
 
-    testCollection.CollectionChanged += (_, args) => {
-      if (args.Action == NotifyCollectionChangedAction.Reset) ++changedCount;
-    };
+        testCollection.CollectionChanged += (_, args) => {
+            if (args.Action == NotifyCollectionChangedAction.Reset) ++changedCount;
+        };
 
-    testCollection.Add(tester1);
-    testCollection.Add(tester2);
+        testCollection.Add(tester1);
+        testCollection.Add(tester2);
 
-    testCollection.Clear();
+        testCollection.Clear();
 
-    Assert.AreEqual(1, changedCount);
-  }
+        Assert.AreEqual(1, changedCount);
+    }
 
-  [TestMethod, TestCategory("Unit")]
-  public void OnCollectionChangedReplaceEventTest() {
-    TestClass tester1 = new();
-    TestClass tester2 = new();
+    [TestMethod, TestCategory("Unit")]
+    public void OnCollectionChangedReplaceEventTest() {
+        TestClass tester1 = new();
+        TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = [];
+        LockingObservableCollection<TestClass> testCollection = [];
 
-    int changedCount = 0;
+        int changedCount = 0;
 
-    testCollection.CollectionChanged += (_, args) => {
-      if (args.Action == NotifyCollectionChangedAction.Replace) ++changedCount;
-    };
+        testCollection.CollectionChanged += (_, args) => {
+            if (args.Action == NotifyCollectionChangedAction.Replace) ++changedCount;
+        };
 
-    testCollection.Add(tester1);
+        testCollection.Add(tester1);
 
-    testCollection[0] = tester2;
+        testCollection[0] = tester2;
 
-    Assert.AreEqual(1, changedCount);
-  }
+        Assert.AreEqual(1, changedCount);
+    }
 
-  [TestMethod, TestCategory("Unit")]
-  public void OnCollectionChangedMoveEventTest() {
-    TestClass tester1 = new();
-    TestClass tester2 = new();
+    [TestMethod, TestCategory("Unit")]
+    public void OnCollectionChangedMoveEventTest() {
+        TestClass tester1 = new();
+        TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = [];
+        LockingObservableCollection<TestClass> testCollection = [];
 
-    int changedCount = 0;
+        int changedCount = 0;
 
-    testCollection.CollectionChanged += (_, args) => {
-      if (args.Action == NotifyCollectionChangedAction.Move) ++changedCount;
-    };
+        testCollection.CollectionChanged += (_, args) => {
+            if (args.Action == NotifyCollectionChangedAction.Move) ++changedCount;
+        };
 
-    testCollection.Add(tester1);
-    testCollection.Add(tester2);
+        testCollection.Add(tester1);
+        testCollection.Add(tester2);
 
-    testCollection.Move(0, 1);
+        testCollection.Move(0, 1);
 
-    Assert.AreEqual(1, changedCount);
-  }
+        Assert.AreEqual(1, changedCount);
+    }
 
-  [TestMethod, TestCategory("Unit")]
-  public void OnCollectionChangedMoveEventSameIndexTest() {
-    TestClass tester1 = new();
-    TestClass tester2 = new();
+    [TestMethod, TestCategory("Unit")]
+    public void OnCollectionChangedMoveEventSameIndexTest() {
+        TestClass tester1 = new();
+        TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = [];
+        LockingObservableCollection<TestClass> testCollection = [];
 
-    int changedCount = 0;
+        int changedCount = 0;
 
-    testCollection.CollectionChanged += (_, args) => {
-      if (args.Action == NotifyCollectionChangedAction.Move) ++changedCount;
-    };
+        testCollection.CollectionChanged += (_, args) => {
+            if (args.Action == NotifyCollectionChangedAction.Move) ++changedCount;
+        };
 
-    testCollection.Add(tester1);
-    testCollection.Add(tester2);
+        testCollection.Add(tester1);
+        testCollection.Add(tester2);
 
-    testCollection.Move(1, 1);
+        testCollection.Move(1, 1);
 
-    Assert.AreEqual(0, changedCount);
-  }
+        Assert.AreEqual(0, changedCount);
+    }
 
-  [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException)), TestCategory("Unit")]
-  public void OnCollectionChangedMoveSourceOutOfRangeTest() {
-    TestClass tester1 = new();
-    TestClass tester2 = new();
+    [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException)), TestCategory("Unit")]
+    public void OnCollectionChangedMoveSourceOutOfRangeTest() {
+        TestClass tester1 = new();
+        TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = [ tester1, tester2 ];
+        LockingObservableCollection<TestClass> testCollection = [tester1, tester2];
 
 
-    testCollection.Move(2, 1);
-  }
+        testCollection.Move(2, 1);
+    }
 
-  [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException)), TestCategory("Unit")]
-  public void OnCollectionChangedMoveDestinationOutOfRangeTest() {
-    TestClass tester1 = new();
-    TestClass tester2 = new();
+    [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException)), TestCategory("Unit")]
+    public void OnCollectionChangedMoveDestinationOutOfRangeTest() {
+        TestClass tester1 = new();
+        TestClass tester2 = new();
 
-    LockingObservableCollection<TestClass> testCollection = [ tester1, tester2 ];
+        LockingObservableCollection<TestClass> testCollection = [tester1, tester2];
 
-    testCollection.Move(1, 2);
-  }
+        testCollection.Move(1, 2);
+    }
 
-  #endregion OnCollectionChanged Tests
+    #endregion OnCollectionChanged Tests
 
-  #region Private Class
+    #region Private Class
 
-  private class TestClass;
+    private class TestClass;
 
-  #endregion Private Class
+    #endregion Private Class
 
 }

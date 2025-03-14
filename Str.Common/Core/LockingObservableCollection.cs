@@ -3,7 +3,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 
-namespace Str.Common.Core; 
+namespace Str.Common.Core;
+
 
 [SuppressMessage("ReSharper", "UnusedType.Global",             Justification = "This is a library.")]
 [SuppressMessage("ReSharper", "UnusedMember.Global",           Justification = "This is a library.")]

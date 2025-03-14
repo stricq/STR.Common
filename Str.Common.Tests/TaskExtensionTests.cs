@@ -3,62 +3,65 @@
 using Str.Common.Extensions;
 
 
-namespace Str.Common.Tests; 
+namespace Str.Common.Tests;
 
 [TestClass]
 public class TaskExtensionTests {
 
-  #region FireAndForget Tests
+    #region FireAndForget Tests
 
-  [TestMethod, TestCategory("Unit")]
-  public void FireAndForgetTaskNoActionSuccess() {
-    MethodAsync().FireAndForget();
-  }
+    [TestMethod, TestCategory("Unit")]
+    public void FireAndForgetTaskNoActionSuccess() {
+        MethodAsync().FireAndForget();
+    }
 
-  [TestMethod, TestCategory("Unit")]
-  public void FireAndForgetTaskNoActionException()
-  {
-    MethodAsync(true).FireAndForget(); // Exception is dropped on the floor
-  }
+    [TestMethod, TestCategory("Unit")]
+    public void FireAndForgetTaskNoActionException() {
+        MethodAsync(true).FireAndForget(); // Exception is dropped on the floor
+    }
 
-  [TestMethod, TestCategory("Unit")]
-  public async Task FireAndForgetTaskActionSuccess() {
-    int callbackCount = 0;
+    [TestMethod, TestCategory("Unit")]
+    public async Task FireAndForgetTaskActionSuccessAsync() {
+        int callbackCount = 0;
 
-    void callback(Exception ex) { ++callbackCount; }
+        MethodAsync().FireAndForget(Callback);
 
-    MethodAsync().FireAndForget(callback);
+        await Task.Delay(1000).Fire();
 
-    await Task.Delay(1000).Fire();
+        Assert.AreEqual(0, callbackCount);
 
-    Assert.AreEqual(0, callbackCount);
-  }
+        return;
 
-  [TestMethod, TestCategory("Unit")]
-  public async Task FireAndForgetTaskActionException() {
-    int callbackCount = 0;
+        void Callback(Exception ex) { ++callbackCount; }
+    }
 
-    void callback(Exception ex) { ++callbackCount; }
+    [TestMethod, TestCategory("Unit")]
+    public async Task FireAndForgetTaskActionExceptionAsync() {
+        int callbackCount = 0;
 
-    MethodAsync(true).FireAndForget(callback);
+        MethodAsync(true).FireAndForget(Callback);
 
-    await Task.Delay(1000).Fire();
+        await Task.Delay(1000).Fire();
 
-    Assert.AreEqual(1, callbackCount);
-  }
+        Assert.AreEqual(1, callbackCount);
 
-  #endregion FireAndForget Tests
+        return;
 
-  #region Private Methods
+        void Callback(Exception ex) { ++callbackCount; }
+    }
 
-  private static async Task MethodAsync(bool throwException = false) {
-    await Task.Delay(500).ConfigureAwait(false);
+    #endregion FireAndForget Tests
 
-    if (throwException) throw new Exception();
+    #region Private Methods
 
-    await Task.CompletedTask.ConfigureAwait(false);
-  }
+    private static async Task MethodAsync(bool throwException = false) {
+        await Task.Delay(500).ConfigureAwait(false);
 
-  #endregion Private Methods
+        if (throwException) throw new Exception();
+
+        await Task.CompletedTask.ConfigureAwait(false);
+    }
+
+    #endregion Private Methods
 
 }

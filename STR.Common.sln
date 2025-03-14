@@ -1,20 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.156
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Str.Common", "Str.Common\Str.Common.csproj", "{5E07704B-4938-4D5F-A695-F87E016AC7BF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A51EE79F-F52E-4DDD-9FBB-F0A5BE4EC2DE}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
+		Jenkinsfile.old = Jenkinsfile.old
 		ReadMe.md = ReadMe.md
 		STR.Common.sln.DotSettings = STR.Common.sln.DotSettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Str.Common.Tests", "Str.Common.Tests\Str.Common.Tests.csproj", "{4FB30997-A73F-485F-BC45-62B6D3B8944C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{9E962354-5E96-438D-B5CE-E6BFD20D2152}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build-publish.yml = .github\workflows\build-publish.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +40,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {A51EE79F-F52E-4DDD-9FBB-F0A5BE4EC2DE}
+		{9E962354-5E96-438D-B5CE-E6BFD20D2152} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0157AB65-53CD-4464-B113-6D50BE77B2FA}

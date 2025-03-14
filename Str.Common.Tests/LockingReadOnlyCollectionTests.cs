@@ -4,14 +4,14 @@ using Str.Common.Core;
 using Str.Common.Extensions;
 
 
-namespace Str.Common.Tests; 
+namespace Str.Common.Tests;
 
 [TestClass]
 public class LockingReadOnlyCollectionTests {
 
   [TestMethod, TestCategory("Unit")]
   public void LockingReadOnlyCollectionCount() {
-    List<int> source = new() { 1, 2, 3 };
+    List<int> source = [1, 2, 3];
 
     LockingReadOnlyCollection<int> tester = source.ToLockingReadOnlyCollection();
 
@@ -20,7 +20,7 @@ public class LockingReadOnlyCollectionTests {
 
   [TestMethod, TestCategory("Unit")]
   public void LockingReadOnlyCollectionContains() {
-    List<int> source = new() { 1, 2, 3 };
+    List<int> source = [1, 2, 3];
 
     LockingReadOnlyCollection<int> tester = source.ToLockingReadOnlyCollection();
 
@@ -29,7 +29,7 @@ public class LockingReadOnlyCollectionTests {
 
   [TestMethod, TestCategory("Unit")]
   public void LockingReadOnlyCollectionCopyTo() {
-    List<int> source = new() { 1, 2, 3 };
+    List<int> source = [1, 2, 3];
 
     LockingReadOnlyCollection<int> tester = source.ToLockingReadOnlyCollection();
 
@@ -44,7 +44,7 @@ public class LockingReadOnlyCollectionTests {
 
   [TestMethod, TestCategory("Unit")]
   public void LockingReadOnlyCollectionIsReadOnly() {
-    List<int> source = new() { 1, 2, 3 };
+    List<int> source = [1, 2, 3];
 
     LockingReadOnlyCollection<int> tester = source.ToLockingReadOnlyCollection();
 
@@ -53,7 +53,7 @@ public class LockingReadOnlyCollectionTests {
 
   [TestMethod, TestCategory("Unit")]
   public void LockingReadOnlyCollectionIsEnumerable() {
-    List<int> source = new() { 1, 2, 3 };
+    List<int> source = [1, 2, 3];
 
     LockingReadOnlyCollection<int> tester = source.ToLockingReadOnlyCollection();
 
@@ -64,7 +64,7 @@ public class LockingReadOnlyCollectionTests {
 
   [TestMethod, TestCategory("Unit")]
   public void LockingReadOnlyCollectionIndexOf() {
-    List<int> source = new() { 1, 2, 3 };
+    List<int> source = [1, 2, 3];
 
     LockingReadOnlyCollection<int> tester = source.ToLockingReadOnlyCollection();
 
@@ -75,7 +75,7 @@ public class LockingReadOnlyCollectionTests {
 
   [TestMethod, TestCategory("Unit")]
   public void LockingReadOnlyCollectionIndexer() {
-    List<int> source = new() { 1, 2, 3 };
+    List<int> source = [1, 2, 3];
 
     LockingReadOnlyCollection<int> tester = source.ToLockingReadOnlyCollection();
 

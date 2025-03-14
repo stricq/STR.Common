@@ -7,6 +7,8 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{github.workspace}}/.nuget
+  github_sha_hash: ${{ github.sha }}
+  github_sha_short: "${github_sha_hash:0:7}"
 
 jobs:
   setup:
@@ -18,5 +20,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.x
+
+    - run: echo "Short Hash - ${github_sha_short}"
 
     - run: dotnet restore -s "https://api.nuget.org/v3/index.json"

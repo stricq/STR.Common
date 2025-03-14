@@ -16,9 +16,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.x
+        cache: true
 
     - name: Restore Nuget Packages
-      run: dotnet restore --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
+      run: dotnet restore --locked-mode --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
 
     - name: Clean Debug
       run: dotnet clean --configuration Debug
@@ -40,6 +41,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.x
+        cache: true
 
     - name: Setup Environment Variables
       run: |
@@ -66,10 +68,10 @@ jobs:
 
         echo $branch_version
 
-        echo "BRANCH_VERSION='${branch_version}'" >> "$GITHUB_ENV"
+        echo "BRANCH_VERSION=${branch_version}" >> "$GITHUB_ENV"
 
     - name: Restore Nuget Packages
-      run: dotnet restore --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
+      run: dotnet restore --locked-mode --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
 
     - name: Clean Release
       run: dotnet clean --configuration Release

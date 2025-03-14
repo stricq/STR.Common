@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{02EA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{9E962354-5E96-438D-B5CE-E6BFD20D2152}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\github-actions-demo.yml = .github\workflows\github-actions-demo.yml
+		.github\workflows\build-publish.yml = .github\workflows\build-publish.yml
 	EndProjectSection
 EndProject
 Global

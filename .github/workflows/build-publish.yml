@@ -56,15 +56,13 @@ jobs:
         branch=values[0]
         version=values[1]
 
-        if (branch == 'release') {
+        if [branch == 'release']; then
           branch_version = "${version}+${git_hash}"
-        }
-        elif (branch == 'dev') {
+        elif [branch == 'dev']; then
           branch_version = "9.0-pre.${jdate}+${git_hash}"
-        }
-        else {
+        else
           branch_version = "${version}-pre.${jdate}+${git_hash}"
-        }
+        fi
 
         echo"BRANCH_VERSION=${branch_version}" >> "$GITHUB_ENV"
 

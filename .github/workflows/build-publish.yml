@@ -64,7 +64,7 @@ jobs:
           branch_version="${version}-pre.${jdate}+${git_hash}"
         fi
 
-        echo "BRANCH_VERSION=${branch_version}" >> "$GITHUB_ENV"
+        echo "BRANCH_VERSION=\"${branch_version}\"" >> "$GITHUB_ENV"
 
     - name: Restore Nuget Packages
       run: dotnet restore --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"

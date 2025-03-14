@@ -20,7 +20,7 @@ jobs:
         cache-dependency-path: '**/packages.lock.json'
 
     - name: Restore Nuget Packages
-      run: dotnet restore --locked-mode --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
+      run: dotnet restore --locked-mode -s "https://api.nuget.org/v3/index.json"
 
     - name: Clean Debug
       run: dotnet clean --configuration Debug

@@ -20,7 +20,7 @@ jobs:
         cache-dependency-path: '**/packages.lock.json'
 
     - name: Restore Nuget Packages
-      run: dotnet restore --locked-mode -s "https://api.nuget.org/v3/index.json"
+      run: dotnet restore --locked-mode
 
     - name: Clean Debug
       run: dotnet clean --configuration Debug
@@ -51,6 +51,8 @@ jobs:
 
         git_hash="${github_sha_hash:0:7}"
 
+        TZ=America/Denver
+
         printf -v jdate '%(%y%j.%H%m)T'
 
         branch_name=${{github.ref_name}}
@@ -63,7 +65,7 @@ jobs:
         if [ $branch == 'release' ]; then
           branch_version="${version}+${git_hash}"
         elif [ $branch == 'dev' ]; then
-          branch_version="9.0-pre.${jdate}+${git_hash}"
+          branch_version="9.0.0-pre.${jdate}+${git_hash}"
         else
           branch_version="${version}-pre.${jdate}+${git_hash}"
         fi
@@ -73,7 +75,7 @@ jobs:
         echo "BRANCH_VERSION=${branch_version}" >> "$GITHUB_ENV"
 
     - name: Restore Nuget Packages
-      run: dotnet restore --locked-mode --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
+      run: dotnet restore --locked-mode
 
     - name: Clean Release
       run: dotnet clean --configuration Release

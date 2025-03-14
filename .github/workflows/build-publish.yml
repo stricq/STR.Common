@@ -4,10 +4,34 @@ on: [push]
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
+  NUGET_DIR: ${{ github.workspace }}/nuget
 
 jobs:
-  setup:
+  unit_tests:
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .Net
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.x
+
+    - name: Restore Nuget Packages
+      run: dotnet restore --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
+
+    - name: Clean Debug
+      run: dotnet clean --configuration Debug
+
+    - name: Build Debug
+      run: dotnet build --configuration Debug --no-restore --packages ./.nuget/packages
+
+    - name: Unit Tests
+      run: dotnet test --configuration Debug --no-build --filter TestCategory=Unit
+
+  build_publish:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref_name, 'prerelease') || startsWith(github.ref_name, 'release') }}
     steps:
     - uses: actions/checkout@v4
 
@@ -24,14 +48,27 @@ jobs:
 
         printf -v jdate '%(%y%j.%H%m)T\n'
 
-        echo "GIT_HASH=${git_hash}" >> "$GITHUB_ENV"
-        echo "JDATE=${jdate}"       >> "$GITHUB_ENV"
+        branch_name=${{github.ref_name}}
+
+        def values = ${branch_name.split('_')}
+
+        branch  = values[0]
+        version = values[1]
+
+        if (branch == 'release') {
+          branch_version = "${version}+${git_hash}"
+        }
+        else {
+          branch_version = "${version}-pre.${jdate}+${git_hash}"
+        }
+
+        echo"BRANCH_VERSION=${branch_version}" >> "$GITHUB_ENV"
 
     - name: Restore Nuget Packages
       run: dotnet restore --packages ./.nuget/packages -s "https://api.nuget.org/v3/index.json"
 
-    - name: Clean
-      run: dotnet clean --configuration Debug
+    - name: Clean Release
+      run: dotnet clean --configuration Release
 
-    - name: Build Debug
-      run: dotnet build --configuration Debug --no-restore --packages ./.nuget/packages
+    - name: Build Release
+      run: dotnet build --configuration Release --no-restore -p:Version="$BRANCH_VERSION" -p:PublishRepositoryUrl=true

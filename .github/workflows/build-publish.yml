@@ -47,7 +47,7 @@ jobs:
 
         git_hash="${github_sha_hash:0:7}"
 
-        printf -v jdate '%(%y%j.%H%m)T\n'
+        printf -v jdate '%(%y%j.%H%m)T'
 
         branch_name=${{github.ref_name}}
 

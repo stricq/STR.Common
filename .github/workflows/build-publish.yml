@@ -55,7 +55,7 @@ jobs:
 
         printf -v jdate '%(%y%j%H%M)T'
 
-        branch_name=${{github.ref_name}}
+        branch_name=${{ github.ref_name }}
 
         values=(${branch_name//_/ })
 

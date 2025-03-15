@@ -134,25 +134,24 @@ public class LockingObservableCollectionTests {
         Assert.AreEqual(0, changedCount);
     }
 
-    [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException)), TestCategory("Unit")]
+    [TestMethod, TestCategory("Unit")]
     public void OnCollectionChangedMoveSourceOutOfRangeTest() {
         TestClass tester1 = new();
         TestClass tester2 = new();
 
         LockingObservableCollection<TestClass> testCollection = [tester1, tester2];
 
-
-        testCollection.Move(2, 1);
+        Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testCollection.Move(2, 1));
     }
 
-    [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException)), TestCategory("Unit")]
+    [TestMethod, TestCategory("Unit")]
     public void OnCollectionChangedMoveDestinationOutOfRangeTest() {
         TestClass tester1 = new();
         TestClass tester2 = new();
 
         LockingObservableCollection<TestClass> testCollection = [tester1, tester2];
 
-        testCollection.Move(1, 2);
+        Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testCollection.Move(1, 2));
     }
 
     #endregion OnCollectionChanged Tests

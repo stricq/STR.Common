@@ -5,6 +5,7 @@ using Str.Common.Extensions;
 
 namespace Str.Common.Tests;
 
+
 [TestClass]
 public class TaskExtensionTests {
 

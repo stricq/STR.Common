@@ -3,6 +3,6 @@
 
 public class MessageBase {
 
-  protected MessageBase() { }
+    protected MessageBase() { }
 
 }

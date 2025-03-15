@@ -84,7 +84,7 @@ public static class StreamExtensions {
 
     [AssertionMethod]
     private static void ValidateCopyToAsyncArguments(Stream input, Stream output, int bufferSize) {
-        if (!input.CanRead) throw new InvalidOperationException("Input stream must be open for reading.");
+        if (!input.CanRead)   throw new InvalidOperationException("Input stream must be open for reading.");
         if (!output.CanWrite) throw new InvalidOperationException("Output stream must be open for writing.");
 
         if (bufferSize < 1) throw new ArgumentException("Argument may not be 0 or negative.", nameof(bufferSize));

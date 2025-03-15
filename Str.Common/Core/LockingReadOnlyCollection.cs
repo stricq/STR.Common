@@ -19,7 +19,7 @@ public sealed class LockingReadOnlyCollection<T> : IList<T>, IReadOnlyList<T> {
     #region Constructor
 
     public LockingReadOnlyCollection(IEnumerable<T> list) {
-        this.list = new LockingList<T>(list);
+        this.list = [.. list];
 
         notSupportedException = new NotSupportedException("This is a Read Only Collection.");
     }

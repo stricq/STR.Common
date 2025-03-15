@@ -1,4 +1,5 @@
-﻿namespace Str.Common.Contracts; 
+﻿namespace Str.Common.Contracts;
+
 
 public interface ITraversable<out T> {
 

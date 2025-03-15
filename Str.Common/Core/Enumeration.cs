@@ -2,8 +2,7 @@
 using System.Reflection;
 
 
-namespace Str.Common.Core; 
-
+namespace Str.Common.Core;
 //
 // This code is based on an article posted by Jimmy Bogard on the Los Techies website:
 //
@@ -15,217 +14,217 @@ namespace Str.Common.Core;
 [SuppressMessage("ReSharper", "UnusedType.Global",             Justification = "This is a library.")]
 public class Enumeration<T> : IComparable where T : struct {
 
-  #region Constructors
+    #region Constructors
 
-  protected Enumeration(T Value, string DisplayName) {
-    this.Value       = Value;
-    this.DisplayName = DisplayName;
-  }
+    protected Enumeration(T Value, string DisplayName) {
+        this.Value       = Value;
+        this.DisplayName = DisplayName;
+    }
 
-  #endregion Constructors
+    #endregion Constructors
 
-  #region Properties
+    #region Properties
 
-  public string DisplayName { get; }
+    public string DisplayName { get; }
 
-  public T Value { get; }
+    public T Value { get; }
 
-  #endregion Properties
+    #endregion Properties
 
-  #region Overrides
+    #region Overrides
 
-  public override string ToString() {
-    return DisplayName;
-  }
+    public override string ToString() {
+        return DisplayName;
+    }
 
-  public override bool Equals(object? obj) {
-    Enumeration<T>? otherValue = obj as Enumeration<T>;
+    public override bool Equals(object? obj) {
+        Enumeration<T>? otherValue = obj as Enumeration<T>;
 
-    if (otherValue == null) return false;
+        if (otherValue == null) return false;
 
-    bool typeMatches = GetType() == obj?.GetType();
+        bool typeMatches = GetType() == obj?.GetType();
 
-    bool valueMatches = Value.Equals(otherValue.Value);
+        bool valueMatches = Value.Equals(otherValue.Value);
 
-    return typeMatches && valueMatches;
-  }
+        return typeMatches && valueMatches;
+    }
 
-  public override int GetHashCode() => Value.GetHashCode();
+    public override int GetHashCode() => Value.GetHashCode();
 
-  public static bool operator ==(Enumeration<T>? a, Enumeration<T>? b) {
-    if (ReferenceEquals(a, b)) return true;
+    public static bool operator ==(Enumeration<T>? a, Enumeration<T>? b) {
+        if (ReferenceEquals(a, b)) return true;
 
-    if ((a is null) || (b is null)) return false;
+        if (a is null || b is null) return false;
 
-    return a.CompareTo(b) == 0;
-  }
+        return a.CompareTo(b) == 0;
+    }
 
-  public static bool operator !=(Enumeration<T>? a, Enumeration<T>? b) {
-    if (ReferenceEquals(a, b)) return false;
+    public static bool operator !=(Enumeration<T>? a, Enumeration<T>? b) {
+        if (ReferenceEquals(a, b)) return false;
 
-    if ((a is null) || (b is null)) return true;
+        if (a is null || b is null) return true;
 
-    return a.CompareTo(b) != 0;
-  }
+        return a.CompareTo(b) != 0;
+    }
 
-  #endregion Overrides
+    #endregion Overrides
 
-  #region Public Methods
+    #region Public Methods
 
-  public static IEnumerable<TOut> GetAll<TOut>() where TOut : Enumeration<T> {
-    Type type = typeof(TOut);
+    public static IEnumerable<TOut> GetAll<TOut>() where TOut : Enumeration<T> {
+        Type type = typeof(TOut);
 
-    FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+        FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
-    return fields.Select(f => f.GetValue(null)).Cast<TOut>();
-  }
+        return fields.Select(f => f.GetValue(null)).Cast<TOut>();
+    }
 
-  public static TOut FromValue<TOut>(T value) where TOut : Enumeration<T> {
-    TOut matchingItem = Parse<TOut, T>(value, "Value", item => item.Value.Equals(value));
+    public static TOut FromValue<TOut>(T value) where TOut : Enumeration<T> {
+        TOut matchingItem = Parse<TOut, T>(value, "Value", item => item.Value.Equals(value));
 
-    return matchingItem;
-  }
+        return matchingItem;
+    }
 
-  public static TOut FromDisplayName<TOut>(string displayName) where TOut : Enumeration<T> {
-    TOut matchingItem = Parse<TOut, string>(displayName, "DisplayName", item => item.DisplayName == displayName);
+    public static TOut FromDisplayName<TOut>(string displayName) where TOut : Enumeration<T> {
+        TOut matchingItem = Parse<TOut, string>(displayName, "DisplayName", item => item.DisplayName == displayName);
 
-    return matchingItem;
-  }
+        return matchingItem;
+    }
 
-  #endregion Public Methods
+    #endregion Public Methods
 
-  #region Private Methods
+    #region Private Methods
 
-  private static TOut Parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration<T> {
-    TOut? matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
+    private static TOut Parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration<T> {
+        TOut? matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
 
-    if (matchingItem != null) return matchingItem;
+        if (matchingItem != null) return matchingItem;
 
-    string message = $"'{value}' is not a valid {description} in {typeof(TOut)}";
+        string message = $"'{value}' is not a valid {description} in {typeof(TOut)}";
 
-    throw new Exception(message);
-  }
+        throw new Exception(message);
+    }
 
-  #endregion Private Methods
+    #endregion Private Methods
 
-  #region IComparable Implementation
+    #region IComparable Implementation
 
-  public int CompareTo(object? other) {
-    other ??= default(T);
+    public int CompareTo(object? other) {
+        other ??= default(T);
 
-    return Comparer<T>.Default.Compare(Value, ((Enumeration<T>)other).Value);
-  }
+        return Comparer<T>.Default.Compare(Value, ((Enumeration<T>)other).Value);
+    }
 
-  #endregion IComparable Implementation
+    #endregion IComparable Implementation
 
 }
 
-[SuppressMessage("ReSharper", "UnusedMember.Global",       Justification = "This is a library.")]
+[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is a library.")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
-[SuppressMessage("ReSharper", "UnusedType.Global",         Justification = "This is a library.")]
+[SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is a library.")]
 public class Enumeration : IComparable {
 
-  #region Constructors
+    #region Constructors
 
-  protected Enumeration(int Value, string DisplayName) {
-    this.Value       = Value;
-    this.DisplayName = DisplayName;
-  }
+    protected Enumeration(int Value, string DisplayName) {
+        this.Value       = Value;
+        this.DisplayName = DisplayName;
+    }
 
-  #endregion Constructors
+    #endregion Constructors
 
-  #region Properties
+    #region Properties
 
-  public string DisplayName { get; }
+    public string DisplayName { get; }
 
-  public int Value { get; }
+    public int Value { get; }
 
-  #endregion Properties
+    #endregion Properties
 
-  #region Overrides
+    #region Overrides
 
-  public override string ToString() {
-    return DisplayName;
-  }
+    public override string ToString() {
+        return DisplayName;
+    }
 
-  public override bool Equals(object? obj) {
-    Enumeration? otherValue = obj as Enumeration;
+    public override bool Equals(object? obj) {
+        Enumeration? otherValue = obj as Enumeration;
 
-    if (otherValue == null) return false;
+        if (otherValue == null) return false;
 
-    bool typeMatches = GetType() == obj?.GetType();
+        bool typeMatches = GetType() == obj?.GetType();
 
-    bool valueMatches = Value.Equals(otherValue.Value);
+        bool valueMatches = Value.Equals(otherValue.Value);
 
-    return typeMatches && valueMatches;
-  }
+        return typeMatches && valueMatches;
+    }
 
-  public override int GetHashCode() => Value.GetHashCode();
+    public override int GetHashCode() => Value.GetHashCode();
 
-  public static bool operator ==(Enumeration? a, Enumeration? b) {
-    if (ReferenceEquals(a, b)) return true;
+    public static bool operator ==(Enumeration? a, Enumeration? b) {
+        if (ReferenceEquals(a, b)) return true;
 
-    if ((a is null) || (b is null)) return false;
+        if (a is null || b is null) return false;
 
-    return a.CompareTo(b) == 0;
-  }
+        return a.CompareTo(b) == 0;
+    }
 
-  public static bool operator !=(Enumeration? a, Enumeration? b) {
-    if (ReferenceEquals(a, b)) return false;
+    public static bool operator !=(Enumeration? a, Enumeration? b) {
+        if (ReferenceEquals(a, b)) return false;
 
-    if ((a is null) || (b is null)) return true;
+        if (a is null || b is null) return true;
 
-    return a.CompareTo(b) != 0;
-  }
+        return a.CompareTo(b) != 0;
+    }
 
-  #endregion Overrides
+    #endregion Overrides
 
-  #region Public Methods
+    #region Public Methods
 
-  public static IEnumerable<TOut> GetAll<TOut>() where TOut : Enumeration {
-    Type type = typeof(TOut);
+    public static IEnumerable<TOut> GetAll<TOut>() where TOut : Enumeration {
+        Type type = typeof(TOut);
 
-    FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+        FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
-    return fields.Select(f => f.GetValue(null)).Cast<TOut>();
-  }
+        return fields.Select(f => f.GetValue(null)).Cast<TOut>();
+    }
 
-  public static TOut FromValue<TOut>(int value) where TOut : Enumeration {
-    TOut matchingItem = Parse<TOut, int>(value, "Value", item => item.Value.Equals(value));
+    public static TOut FromValue<TOut>(int value) where TOut : Enumeration {
+        TOut matchingItem = Parse<TOut, int>(value, "Value", item => item.Value.Equals(value));
 
-    return matchingItem;
-  }
+        return matchingItem;
+    }
 
-  public static TOut FromDisplayName<TOut>(string displayName) where TOut : Enumeration {
-    TOut matchingItem = Parse<TOut, string>(displayName, "DisplayName", item => item.DisplayName == displayName);
+    public static TOut FromDisplayName<TOut>(string displayName) where TOut : Enumeration {
+        TOut matchingItem = Parse<TOut, string>(displayName, "DisplayName", item => item.DisplayName == displayName);
 
-    return matchingItem;
-  }
+        return matchingItem;
+    }
 
-  #endregion Public Methods
+    #endregion Public Methods
 
-  #region Private Methods
+    #region Private Methods
 
-  private static TOut Parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration {
-    TOut? matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
+    private static TOut Parse<TOut, TIn>(TIn value, string description, Func<TOut, bool> predicate) where TOut : Enumeration {
+        TOut? matchingItem = GetAll<TOut>().FirstOrDefault(predicate);
 
-    if (matchingItem != null) return matchingItem;
+        if (matchingItem != null) return matchingItem;
 
-    string message = $"'{value}' is not a valid {description} in {typeof(TOut)}";
+        string message = $"'{value}' is not a valid {description} in {typeof(TOut)}";
 
-    throw new Exception(message);
-  }
+        throw new Exception(message);
+    }
 
-  #endregion Private Methods
+    #endregion Private Methods
 
-  #region IComparable Implementation
+    #region IComparable Implementation
 
-  public int CompareTo(object? other) {
-    other ??= default(int);
+    public int CompareTo(object? other) {
+        other ??= 0;
 
-    return Comparer<int>.Default.Compare(Value, ((Enumeration)other).Value);
-  }
+        return Comparer<int>.Default.Compare(Value, ((Enumeration)other).Value);
+    }
 
-  #endregion IComparable Implementation
+    #endregion IComparable Implementation
 
 }

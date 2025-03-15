@@ -1,54 +1,54 @@
 ﻿using System.Collections;
 
 
-namespace Str.Common.Core; 
-
+namespace Str.Common.Core;
+//
 // https://codereview.stackexchange.com/questions/7276/reader-writer-collection
-
+//
 public sealed class LockingEnumerator<T> : IEnumerator<T> {
 
-  #region Private Fields
+    #region Private Fields
 
-  private readonly IEnumerator<T> inner;
+    private readonly IEnumerator<T> inner;
 
-  private readonly ReaderWriterLockSlim innerLock;
+    private readonly ReaderWriterLockSlim innerLock;
 
-  #endregion Private Fields
+    #endregion Private Fields
 
-  #region Constructor
+    #region Constructor
 
-  public LockingEnumerator(IEnumerator<T> inner, ReaderWriterLockSlim innerLock) {
-    this.inner = inner;
+    public LockingEnumerator(IEnumerator<T> inner, ReaderWriterLockSlim innerLock) {
+        this.inner = inner;
 
-    this.innerLock = innerLock;
+        this.innerLock = innerLock;
 
-    innerLock.EnterReadLock();
-  }
+        innerLock.EnterReadLock();
+    }
 
-  #endregion Constructor
+    #endregion Constructor
 
-  #region IEnumerator<T> Implementation
+    #region IEnumerator<T> Implementation
 
-  public bool MoveNext() {
-    return inner.MoveNext();
-  }
+    public bool MoveNext() {
+        return inner.MoveNext();
+    }
 
-  public void Reset() {
-    inner.Reset();
-  }
+    public void Reset() {
+        inner.Reset();
+    }
 
-  public T Current => inner.Current;
+    public T Current => inner.Current;
 
-  object IEnumerator.Current => Current!;
+    object IEnumerator.Current => Current!;
 
-  #endregion IEnumerator<T> Implementation
+    #endregion IEnumerator<T> Implementation
 
-  #region IDisposable Implementation
+    #region IDisposable Implementation
 
-  public void Dispose() {
-    innerLock.ExitReadLock();
-  }
+    public void Dispose() {
+        innerLock.ExitReadLock();
+    }
 
-  #endregion IDisposable Implementation
+    #endregion IDisposable Implementation
 
 }

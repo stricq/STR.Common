@@ -5,8 +5,6 @@ using JetBrains.Annotations;
 
 
 namespace Str.Common.Core;
-
-
 //
 // https://codereview.stackexchange.com/questions/7276/reader-writer-collection
 //

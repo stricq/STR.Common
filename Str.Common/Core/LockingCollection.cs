@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 
 namespace Str.Common.Core;
 
+
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is a library.")]
 [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global", Justification = "This is a library.")]
 [SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "This is a library.")]
@@ -22,7 +23,7 @@ public class LockingCollection<T> : IList<T>, IReadOnlyList<T> {
     }
 
     public LockingCollection(IEnumerable<T> enumerable) {
-        Items = new LockingList<T>(enumerable);
+        Items = [.. enumerable];
     }
 
     #endregion Constructors

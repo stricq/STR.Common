@@ -1,7 +1,5 @@
 ﻿using System.Collections.Specialized;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using Str.Common.Core;
 
 

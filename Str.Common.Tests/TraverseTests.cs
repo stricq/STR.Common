@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using Str.Common.Contracts;
 using Str.Common.Core;
 using Str.Common.Extensions;

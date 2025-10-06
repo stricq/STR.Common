@@ -42,7 +42,7 @@ public static class EnumerableExtensions {
         Y<IEnumerable<T>>(f => items => {
             list.AddRange(items.Where(predicate));
 
-            foreach (T i in items) f(i.Children);
+            foreach(T i in items) f(i.Children);
         })(source);
 
         return list;
@@ -55,7 +55,7 @@ public static class EnumerableExtensions {
         Y<IEnumerable<T>>(f => items => {
             list.AddRange(items);
 
-            foreach (T i in items) f(i.Children);
+            foreach(T i in items) f(i.Children);
         })(source);
 
         return list;

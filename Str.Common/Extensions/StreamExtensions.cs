@@ -36,7 +36,7 @@ public static class StreamExtensions {
 
         Task? write = null;
 
-        while (true) {
+        while(true) {
             //
             // wait for the read operation to complete
             //

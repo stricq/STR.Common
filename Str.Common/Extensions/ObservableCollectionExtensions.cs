@@ -15,11 +15,11 @@ public static class ObservableCollectionExtensions {
     #region AddRange
 
     public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> Items) {
-        foreach (T item in Items) collection.Add(item);
+        foreach(T item in Items) collection.Add(item);
     }
 
     public static void AddRange<T>(this LockingObservableCollection<T> collection, IEnumerable<T> Items) {
-        foreach (T item in Items) collection.Add(item);
+        foreach(T item in Items) collection.Add(item);
     }
 
     #endregion AddRange

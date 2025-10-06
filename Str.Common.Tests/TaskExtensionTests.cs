@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using Str.Common.Extensions;
+﻿using Str.Common.Extensions;
 
 
 namespace Str.Common.Tests;
